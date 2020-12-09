@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
-import ImageUploader from './imageUploader.js'
+import Tripago from './tripago.js'
 
 function App() {
   return (
     <div className="App">
-      <ImageUploader />
+      <Tripago />
     </div>
   );
 }
