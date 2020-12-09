@@ -14,15 +14,22 @@ class ImageUploader extends Component {
     }));
   }
 
+  onUpload = () => {
+    console.log('upload images to backend')
+  }
+
   render() {
     return (
-      <ImageUploadField
-        withPreview={true}
-        buttonText="Choose images"
-        label="Max file size = 5mb"
-        onChange={this.onDrop}
-        imgExtension={[".jpg", ".gif", ".png"]}
-      />
+      <React.Fragment>
+        <ImageUploadField
+          withPreview={true}
+          buttonText="Choose images"
+          label="Max file size = 5mb"
+          onChange={this.onDrop}
+          imgExtension={[".jpg", ".gif", ".png"]}
+        />
+        <button className="image-upload-button" onClick={this.onUpload}>Upload</button>
+      </React.Fragment>
     )
   }
 }

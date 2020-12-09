@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import Tripago from './tripago.js'
+import Tripago from './containers/tripago.js'
 
 function App() {
   return (

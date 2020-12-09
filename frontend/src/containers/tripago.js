@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import Header from './header.js'
-import ImageUploader from './imageUploader.js'
+import Header from '../components/header.js'
+import ImageUploader from '../components/imageUploader.js'
 
 class Tripago extends Component {
   constructor(props) {
