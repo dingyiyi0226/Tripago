@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import ImageUploadField from "react-images-upload"
 
+const URL_ROOT = 'http://localhost:4000'
+const instance = axios.create({
+  baseURL: URL_ROOT
+})
 
 class ImageUploader extends Component {
   constructor(props) {
@@ -14,8 +19,12 @@ class ImageUploader extends Component {
     }));
   }
 
-  onUpload = () => {
+  onUpload = async () => {
     console.log('upload images to backend')
+
+
+    let res = await instance.post('/upload', {'data': 'testmsg'})
+    console.log(res)
   }
 
   render() {
@@ -28,7 +37,7 @@ class ImageUploader extends Component {
           onChange={this.onDrop}
           imgExtension={[".jpg", ".gif", ".png"]}
         />
-        <button className="image-upload-button" onClick={this.onUpload}>Upload</button>
+        <button className="image-upload-button" onClick={() => this.onUpload() }>Upload</button>
       </React.Fragment>
     )
   }
