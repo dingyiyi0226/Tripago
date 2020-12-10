@@ -24,7 +24,7 @@ class googleMap extends Component {
     return (
       <div className="google-map">
         <GoogleMap
-          bootstrapURLKeys={{ key: 'AIzaSyAp6VGqr7L5h4E4D1dTru8rNuS0SZ7KHF4' }}
+          bootstrapURLKeys={{ key: 'AIzaSyCdQEgygOjmP4VKOSsjjVFsX29U15DjvUU' }}
           defaultCenter={NTULibrary}
           defaultZoom={15}
           onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
