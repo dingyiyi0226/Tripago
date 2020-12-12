@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import ImageUploadField from "react-images-upload"
 
+import './component.css'
+
 const URL_ROOT = 'http://localhost:4000'
 const instance = axios.create({
   baseURL: URL_ROOT
@@ -36,6 +38,7 @@ class ImageUploader extends Component {
           label="Max file size = 5mb"
           onChange={this.onDrop}
           imgExtension={[".jpg", ".gif", ".png"]}
+          buttonClassName="image-uploader__button"
         />
         <button className="image-upload-button" onClick={() => this.onUpload() }>Upload</button>
       </React.Fragment>

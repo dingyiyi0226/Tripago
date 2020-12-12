@@ -1,0 +1,24 @@
+/* Header */
+.tripago__header {
+  background: #111111;
+  color: #ffffff;
+}
+.tripago__title {
+  margin: 0;
+  padding: 1rem 0;
+}
+
+/* Image Uploader */
+.image-uploader__button {
+  font-family: inherit;
+  font-weight: 600 !important; /* override the default style */
+}
+
+/* Google Map */
+.google-map {
+  margin: auto;
+  padding: 10px;
+  
+  height: 60vh;
+  width: 60vw;
+}

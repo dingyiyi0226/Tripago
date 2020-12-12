@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import GoogleMap from 'google-map-react'
 
-import './googleMap.css'
+import './component.css'
+
+const GOOGLE_API_KEY = 'idontwanttoshowthemap'
+// const GOOGLE_API_KEY = 'AIzaSyCdQEgygOjmP4VKOSsjjVFsX29U15DjvUU'
 
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
 const NTUSportsCenter = {lat: 25.0222, lng: 121.5354}
@@ -24,7 +27,7 @@ class googleMap extends Component {
     return (
       <div className="google-map">
         <GoogleMap
-          bootstrapURLKeys={{ key: 'AIzaSyCdQEgygOjmP4VKOSsjjVFsX29U15DjvUU' }}
+          bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
           defaultCenter={NTULibrary}
           defaultZoom={15}
           onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
