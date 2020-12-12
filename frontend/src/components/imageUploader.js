@@ -5,7 +5,7 @@ import ImageUploadField from "react-images-upload"
 import './components.css'
 
 const URL_ROOT = 'http://localhost:4000'
-// const URL_ROOT = 'https://abiding-kingdom-298117.an.r.appspot.com' // GCP App Engine URL
+// const URL_ROOT = 'https://my-tripago.an.r.appspot.com' // GCP App Engine URL
 
 const instance = axios.create({
   baseURL: URL_ROOT

@@ -5,7 +5,7 @@ import GoogleMap from 'google-map-react'
 import './components.css'
 
 const GOOGLE_API_KEY = 'idontwanttoshowthemap'
-// const GOOGLE_API_KEY = 'AIzaSyCdQEgygOjmP4VKOSsjjVFsX29U15DjvUU'
+// const GOOGLE_API_KEY = 'AIzaSyAvh8Dk4QLO0rwBDoFV2_XTkVLYDOkREhE'
 
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
 const NTUSportsCenter = {lat: 25.0222, lng: 121.5354}
