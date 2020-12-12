@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import GoogleMap from 'google-map-react'
 
-import './component.css'
+import './components.css'
 
 const GOOGLE_API_KEY = 'idontwanttoshowthemap'
 // const GOOGLE_API_KEY = 'AIzaSyCdQEgygOjmP4VKOSsjjVFsX29U15DjvUU'
