@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/Tripago/static/css/main.8c887578.chunk.css",
-    "main.js": "/Tripago/static/js/main.ca967104.chunk.js",
-    "main.js.map": "/Tripago/static/js/main.ca967104.chunk.js.map",
-    "runtime-main.js": "/Tripago/static/js/runtime-main.3871a75c.js",
-    "runtime-main.js.map": "/Tripago/static/js/runtime-main.3871a75c.js.map",
-    "static/css/2.86e65bd8.chunk.css": "/Tripago/static/css/2.86e65bd8.chunk.css",
-    "static/js/2.4c4716a5.chunk.js": "/Tripago/static/js/2.4c4716a5.chunk.js",
-    "static/js/2.4c4716a5.chunk.js.map": "/Tripago/static/js/2.4c4716a5.chunk.js.map",
-    "static/js/3.ef6e4696.chunk.js": "/Tripago/static/js/3.ef6e4696.chunk.js",
-    "static/js/3.ef6e4696.chunk.js.map": "/Tripago/static/js/3.ef6e4696.chunk.js.map",
-    "index.html": "/Tripago/index.html",
-    "static/css/2.86e65bd8.chunk.css.map": "/Tripago/static/css/2.86e65bd8.chunk.css.map",
-    "static/css/main.8c887578.chunk.css.map": "/Tripago/static/css/main.8c887578.chunk.css.map",
-    "static/js/2.4c4716a5.chunk.js.LICENSE.txt": "/Tripago/static/js/2.4c4716a5.chunk.js.LICENSE.txt",
-    "static/media/UploadIcon.svg": "/Tripago/static/media/UploadIcon.469126df.svg",
-    "static/media/logo.6ce24c58.svg": "/Tripago/static/media/logo.6ce24c58.svg"
+    "main.css": "/tripago/static/css/main.8c887578.chunk.css",
+    "main.js": "/tripago/static/js/main.aded7994.chunk.js",
+    "main.js.map": "/tripago/static/js/main.aded7994.chunk.js.map",
+    "runtime-main.js": "/tripago/static/js/runtime-main.10769cb6.js",
+    "runtime-main.js.map": "/tripago/static/js/runtime-main.10769cb6.js.map",
+    "static/css/2.86e65bd8.chunk.css": "/tripago/static/css/2.86e65bd8.chunk.css",
+    "static/js/2.4c4716a5.chunk.js": "/tripago/static/js/2.4c4716a5.chunk.js",
+    "static/js/2.4c4716a5.chunk.js.map": "/tripago/static/js/2.4c4716a5.chunk.js.map",
+    "static/js/3.ef6e4696.chunk.js": "/tripago/static/js/3.ef6e4696.chunk.js",
+    "static/js/3.ef6e4696.chunk.js.map": "/tripago/static/js/3.ef6e4696.chunk.js.map",
+    "index.html": "/tripago/index.html",
+    "static/css/2.86e65bd8.chunk.css.map": "/tripago/static/css/2.86e65bd8.chunk.css.map",
+    "static/css/main.8c887578.chunk.css.map": "/tripago/static/css/main.8c887578.chunk.css.map",
+    "static/js/2.4c4716a5.chunk.js.LICENSE.txt": "/tripago/static/js/2.4c4716a5.chunk.js.LICENSE.txt",
+    "static/media/UploadIcon.svg": "/tripago/static/media/UploadIcon.469126df.svg",
+    "static/media/logo.6ce24c58.svg": "/tripago/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.3871a75c.js",
+    "static/js/runtime-main.10769cb6.js",
     "static/css/2.86e65bd8.chunk.css",
     "static/js/2.4c4716a5.chunk.js",
     "static/css/main.8c887578.chunk.css",
-    "static/js/main.ca967104.chunk.js"
+    "static/js/main.aded7994.chunk.js"
   ]
 }
