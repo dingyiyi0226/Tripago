@@ -4,36 +4,68 @@ import GoogleMap from 'google-map-react'
 
 import './components.css'
 
-const GOOGLE_API_KEY = 'idontwanttoshowthemap'
-// const GOOGLE_API_KEY = 'AIzaSyAvh8Dk4QLO0rwBDoFV2_XTkVLYDOkREhE'
-
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
 const NTUSportsCenter = {lat: 25.0222, lng: 121.5354}
+const NTUCommon = {lat: 25.0160, lng: 121.5375}
+
+const PLACES = [
+  {name: 'NTUSportsCenter', 'location': NTUSportsCenter},
+  {name: 'NTUCommon', 'location': NTUCommon},
+]
+
+const getInfoWindowString = (place) => `
+  <div class="info-window">
+    <div class="place-name">
+      ${place.name}
+    </div>
+  </div>`;
 
 class googleMap extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
+    this.state = {
+      places: PLACES,
+    }
   }
 
-  renderMarkers = (map, maps) => {  // map is the map instance, maps is the maps API object
-    let marker = new maps.Marker({
-    position: NTUSportsCenter,
-    map: map,
+  renderGoogleApi = (map, maps, places) => {  // map is the map instance, maps is the maps API object
+
+    const markers = [];
+    const infowindows = [];
+
+    places.forEach((place) => {
+      markers.push(new maps.Marker({
+        position: {
+          lat: place.location.lat,
+          lng: place.location.lng,
+        },
+        map,
+      }))
+      infowindows.push(new maps.InfoWindow({
+        content: getInfoWindowString(place),
+      }))
+    })
+
+    markers.forEach((marker, i) => {
+      marker.addListener('click', () => {
+        infowindows[i].open(map, marker);
+      })
     })
   }
 
   render () {
+    const { places } = this.state
+
     return (
       <div className="google-map">
         <GoogleMap
-          bootstrapURLKeys={{ key: GOOGLE_API_KEY }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
           defaultCenter={NTULibrary}
           defaultZoom={15}
-          onGoogleApiLoaded={({map, maps}) => this.renderMarkers(map, maps)}
           yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, places)}
         >
-        {/* Add Custom Markers Here */}
         </GoogleMap>
       </div>
     )

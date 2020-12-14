@@ -22,3 +22,7 @@
   height: 60vh;
   width: 60vw;
 }
+
+.info-window .place-name {
+  font-size: 14px;
+}
