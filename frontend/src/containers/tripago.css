@@ -1,0 +1,21 @@
+.tripago__wrapper {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: 50px auto;
+}
+
+.tripago__header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.tripago__sidebar {
+  grid-column: 1;
+  grid-row: 2 / -1;
+}
+
+.tripago__content {
+  grid-column: 2 / -1;
+  grid-row: 2 / -1;
+}

@@ -6,9 +6,9 @@ class Header extends Component {
 
   render () {
     return (
-      <header className="tripago__header">
-        <h1 className="tripago__title">Tripago</h1>
-      </header>
+      <div className="header__wrapper">
+        <h1 className="header__title">Tripago</h1>
+      </div>
     )
   }
 }

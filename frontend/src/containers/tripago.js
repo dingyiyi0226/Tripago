@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { BrowserRouter } from "react-router-dom";
 
 import Header from '../components/header.js'
-import ImageUploader from '../components/imageUploader.js'
-import GoogleMap from '../components/googleMap.js'
+import Sidebar from '../components/sidebar.js'
+import Content from '../components/content.js'
+
+import './tripago.css'
 
 class Tripago extends Component {
   constructor(props) {
@@ -11,11 +14,20 @@ class Tripago extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Header />
-        <ImageUploader />
-        <GoogleMap />
-      </React.Fragment>
+      <BrowserRouter basename={ process.env.public_URL }>
+        <div className="tripago__wrapper">
+          <div className="tripago__header">
+            <Header />
+          </div>
+          <div className="tripago__sidebar">
+            <Sidebar />
+          </div>
+          <div className="tripago__content">
+            <Content />
+          </div>
+
+        </div>
+      </BrowserRouter>
 
     )
   }
