@@ -8,11 +8,12 @@ import Content from '../components/content.js'
 class Tripago extends Component {
   constructor(props) {
     super(props);
+    console.log(process.env.PUBLIC_URL)
   }
 
   render() {
     return (
-      <BrowserRouter basename={ process.env.public_URL }>
+      <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Header />
         <div className="container-fluid h-100">
           <div className="row h-100">

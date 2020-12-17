@@ -8,12 +8,12 @@ class Header extends Component {
       <nav className="navbar navbar-expand navbar-dark bg-primary">
         <a className="navbar-brand" href="/">Tripago
         </a>
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="/">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">yeah</a>
+          <li className="nav-item">
+            <a className="nav-link" href="/">yeah</a>
           </li>
         </ul>
       </nav>
