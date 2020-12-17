@@ -1,57 +1,3 @@
-/* Header */
-.header__wrapper {
-  display: flex;
-  background: #111111;
-  color: #ffffff;
-  height: 100%;
-}
-.header__title {
-  font-size: 28px;
-  font-weight: 600;
-  margin: auto;
-  justify-content: center;
-}
-
-/* Footer */
-.footer__wrapper {
-  display: flex;
-  background: #111111;
-  color: #ffffff;
-  height: 100%;
-}
-
-/* Sidebar */
-.sidebar__wrapper {
-  background: #666666;
-  color: #ffffff;
-
-  height: 100%;
-  margin: 0;
-  padding: 10px;
-}
-
-.sidebar__wrapper > p {
-  margin: 10px;
-}
-
-.sidebar__wrapper > ul {
-  margin: 0;
-  padding-left: 20px;
-  list-style-type: none;
-  list-style-position: outside;
-  text-align: left;
-}
-
-.sidebar__wrapper a {
-  color: #ffffff;
-  text-decoration: none;
-}
-
-/* Content */
-.content__wrapper {
-  height: 100%;
-}
-
 /* Image Uploader */
 .image-uploader__button {
   font-family: inherit;
@@ -61,10 +7,10 @@
 /* Google Map */
 .google-map {
   margin: auto;
-  padding: 10px;
+  padding-top: 20px;
   
   height: 60%;
-  width: 80%;
+  width: 90%;
 }
 
 .info-window .place-name {

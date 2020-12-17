@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
-
-import './components.css'
+import { NavLink } from "react-router-dom";
 
 class Header extends Component {
 
   render () {
     return (
-      <div className="header__wrapper">
-        <h1 className="header__title">Tripago</h1>
-      </div>
+      <nav className="navbar navbar-expand navbar-dark bg-primary">
+        <a className="navbar-brand" href="/">Tripago
+        </a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">yeah</a>
+          </li>
+        </ul>
+      </nav>
     )
   }
 }

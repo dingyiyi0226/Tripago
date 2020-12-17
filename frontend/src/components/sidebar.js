@@ -7,11 +7,15 @@ class Sidebar extends Component {
 
   render () {
     return (
-      <div className="sidebar__wrapper">
-        <p> My Trip 1 </p>
-        <ul>
-          <li><NavLink to="/imageUploader">Image Uploader</NavLink></li>
-          <li><NavLink to="/travelMap">Travel Map</NavLink></li>
+      <div className="position-sticky pt-3 sidebar">
+        <h5> NTU Travel </h5>
+        <ul className="nav flex-column align-items-start">
+          <li className="nav-item mr-0">
+            <NavLink to="/imageUploader" className="nav-link">Image Uploader</NavLink>
+          </li>
+          <li className="nav-item mr-0">
+            <NavLink to="/travelMap" className="nav-link">Travel Map</NavLink>
+          </li>
         </ul>
       </div>
     )

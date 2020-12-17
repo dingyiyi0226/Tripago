@@ -5,8 +5,6 @@ import Header from '../components/header.js'
 import Sidebar from '../components/sidebar.js'
 import Content from '../components/content.js'
 
-import './tripago.css'
-
 class Tripago extends Component {
   constructor(props) {
     super(props);
@@ -15,18 +13,18 @@ class Tripago extends Component {
   render() {
     return (
       <BrowserRouter basename={ process.env.public_URL }>
-        <div className="tripago__wrapper">
-          <div className="tripago__header">
-            <Header />
+        <Header />
+        <div className="container-fluid h-100">
+          <div className="row h-100">
+            <div className="col-4 col-sm-3 col-lg-2 d-md-block bg-light sidebar">
+              <Sidebar />
+            </div>
+            <div className="col-8 col-sm-9 col-lg-10 px-md-4">
+              <Content />
+            </div>
           </div>
-          <div className="tripago__sidebar">
-            <Sidebar />
-          </div>
-          <div className="tripago__content">
-            <Content />
-          </div>
-
         </div>
+        
       </BrowserRouter>
 
     )
