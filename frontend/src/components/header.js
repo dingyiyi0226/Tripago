@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom'
+import { Nav, Navbar } from 'react-bootstrap'
 
 class Header extends Component {
 
   render () {
     return (
-      <nav className="navbar navbar-expand navbar-dark bg-primary">
-        <a className="navbar-brand" href={process.env.PUBLIC_URL}>Tripago
-        </a>
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <a className="nav-link" href={process.env.PUBLIC_URL}>Home</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href={process.env.PUBLIC_URL}>yeah</a>
-          </li>
-        </ul>
-      </nav>
+      <Navbar variant="dark" bg="primary">
+        <Navbar.Brand href={ process.env.PUBLIC_URL }>Tripago</Navbar.Brand>
+        <Nav className="mr-auto">
+          <Nav.Item>
+            <Nav.Link href={ process.env.PUBLIC_URL }>Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href={ process.env.PUBLIC_URL }>yeah</Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Navbar>
     )
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import ImageUploadField from "react-images-upload"
+import ImageUploadField from 'react-images-upload'
+import { Button } from 'react-bootstrap'
 
 import './components.css'
 
@@ -42,7 +43,7 @@ class ImageUploader extends Component {
           imgExtension={[".jpg", ".gif", ".png"]}
           buttonClassName="image-uploader__button"
         />
-        <button className="image-upload-button" onClick={() => this.onUpload() }>Upload</button>
+        <Button onClick={() => this.onUpload()}>Upload</Button>
       </React.Fragment>
     )
   }
