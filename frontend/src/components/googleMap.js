@@ -30,7 +30,6 @@ class googleMap extends Component {
   }
 
   renderGoogleApi = (map, maps, places) => {  // map is the map instance, maps is the maps API object
-
     const markers = [];
     const infowindows = [];
 
@@ -56,7 +55,7 @@ class googleMap extends Component {
 
   render () {
     const { places } = this.state
-
+    
     return (
       <div className="google-map">
         <GoogleMap
