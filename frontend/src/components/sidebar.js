@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom'
+import { Nav } from 'react-bootstrap'
 
 import './components.css'
 
@@ -7,16 +8,16 @@ class Sidebar extends Component {
 
   render () {
     return (
-      <div className="position-sticky pt-3 sidebar">
+      <div className="position-sticky pt-3">
         <h5> NTU Travel </h5>
-        <ul className="nav flex-column align-items-start">
-          <li className="nav-item mr-0">
-            <NavLink to="/imageUploader" className="nav-link">Image Uploader</NavLink>
-          </li>
-          <li className="nav-item mr-0">
-            <NavLink to="/travelMap" className="nav-link">Travel Map</NavLink>
-          </li>
-        </ul>
+        <Nav className="align-items-start">
+          <Nav.Item className="mr-0">
+            <Nav.Link as={NavLink} to="/imageUploader">Image Uploader</Nav.Link>
+          </Nav.Item>
+          <Nav.Item className="mr-0">
+            <Nav.Link as={NavLink} to="/travelMap">Travel Map</Nav.Link>
+          </Nav.Item>
+        </Nav>
       </div>
     )
   }

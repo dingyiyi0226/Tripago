@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom'
+import { Container, Row, Col } from 'react-bootstrap'
 
 import Header from '../components/header.js'
 import Sidebar from '../components/sidebar.js'
@@ -8,23 +9,22 @@ import Content from '../components/content.js'
 class Tripago extends Component {
   constructor(props) {
     super(props);
-    console.log(process.env.PUBLIC_URL)
   }
 
   render() {
     return (
       <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Header />
-        <div className="container-fluid h-100">
-          <div className="row h-100">
-            <div className="col-4 col-sm-3 col-lg-2 d-md-block bg-light sidebar">
+        <Container fluid className="h-100">
+          <Row className="h-100">
+            <Col xs={4} sm={3} lg={2}>
               <Sidebar />
-            </div>
-            <div className="col-8 col-sm-9 col-lg-10 px-md-4">
+            </Col>
+            <Col xs={8} sm={9} lg={10}>
               <Content />
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
         
       </BrowserRouter>
 

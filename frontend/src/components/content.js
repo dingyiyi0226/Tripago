@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom"
 
 import ImageUploader from './imageUploader.js'
 import GoogleMap from './googleMap.js'
@@ -14,7 +14,7 @@ class Content extends Component {
             <Route exact path="/" >Home</Route>
             <Route path="/imageUploader" >Image Uploader</Route>
             <Route path="/travelMap" >Travel Map</Route>
-        </Switch>
+          </Switch>
         </div>
         <Switch>
           <Route path="/imageUploader" component={ImageUploader}/>
