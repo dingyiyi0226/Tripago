@@ -7,13 +7,13 @@ class Header extends Component {
   render () {
     return (
       <Navbar variant="dark" bg="primary">
-        <Navbar.Brand href={ process.env.PUBLIC_URL }>Tripago</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to="/home">Tripago</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Item>
-            <Nav.Link href={ process.env.PUBLIC_URL }>Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/home">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href={ process.env.PUBLIC_URL }>yeah</Nav.Link>
+            <Nav.Link as={NavLink} to="/albums">Albums</Nav.Link>
           </Nav.Item>
         </Nav>
       </Navbar>

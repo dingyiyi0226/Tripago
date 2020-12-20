@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 
 import Header from '../components/header.js'
-import Sidebar from '../components/sidebar.js'
-import Content from '../components/content.js'
+import Album from '../components/albumWrapper.js'
+import Home from '../components/Home.js'
+import Albums from '../components/Albums.js'
+
 
 class Tripago extends Component {
   constructor(props) {
@@ -15,17 +17,22 @@ class Tripago extends Component {
     return (
       <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Header />
-        <Container fluid className="h-100">
-          <Row className="h-100">
-            <Col xs={4} sm={3} lg={2}>
-              <Sidebar />
-            </Col>
-            <Col xs={8} sm={9} lg={10}>
-              <Content />
-            </Col>
-          </Row>
-        </Container>
-        
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/albums">
+            <Albums />
+          </Route>
+          <Route path="/albums/:id">
+            <Album />
+          </Route>
+
+        </Switch>
+
       </BrowserRouter>
 
     )

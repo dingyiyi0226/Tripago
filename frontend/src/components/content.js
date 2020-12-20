@@ -6,19 +6,21 @@ import GoogleMap from './googleMap.js'
 
 class Content extends Component {
 
-  render () {
+  render() {
+    const { id } = this.props
+
     return (
       <div className="h-100">
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <Switch>
-            <Route exact path="/" >Home</Route>
-            <Route path="/imageUploader" >Image Uploader</Route>
-            <Route path="/travelMap" >Travel Map</Route>
+            <Route exact path={`/albums/${id}/`} >Album - {id}</Route>
+            <Route path={`/albums/${id}/upload`} >Image Uploader</Route>
+            <Route path={`/albums/${id}/map`} >Travel Map</Route>
           </Switch>
         </div>
         <Switch>
-          <Route path="/imageUploader" component={ImageUploader}/>
-          <Route path="/travelMap" component={GoogleMap}/>
+          <Route path={`/albums/${id}/upload`} component={ImageUploader}/>
+          <Route path={`/albums/${id}/map`} component={GoogleMap}/>
         </Switch>
       </div>
     )

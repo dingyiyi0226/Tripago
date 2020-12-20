@@ -2,7 +2,7 @@
   "name": "tripago",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:dingyiyi0226/Tripago.git",
+  "repository": "git@github.com:dingyiyi0226/tripago.git",
   "author": "Huan-Ting,Chen <dingyiyi0226@gmail.com>",
   "license": "MIT",
   "scripts": {
