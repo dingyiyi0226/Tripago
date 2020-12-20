@@ -1,11 +1,11 @@
-/* Image Uploader */
-.image-uploader__button {
+/* Album Uploader */
+.album-uploader__button {
   font-family: inherit;
   font-weight: 600 !important; /* override the default style */
 }
 
-/* Google Map */
-.google-map {
+/* Album Map */
+.album-map {
   margin: auto;
   padding-top: 20px;
   

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 
 import testpic from './testpic.png'
 

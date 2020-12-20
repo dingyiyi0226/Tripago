@@ -3,7 +3,7 @@ import axios from 'axios'
 import ImageUploadField from 'react-images-upload'
 import { Button } from 'react-bootstrap'
 
-import './components.css'
+import './Album.css'
 
 const URL_ROOT = 'http://localhost:4000'
 // const URL_ROOT = 'https://my-tripago.an.r.appspot.com' // GCP App Engine URL
@@ -12,7 +12,7 @@ const instance = axios.create({
   baseURL: URL_ROOT
 })
 
-class ImageUploader extends Component {
+class AlbumUploader extends Component {
   constructor(props) {
     super(props);
     this.state = { pictures: [] }; // type: [File,]
@@ -41,7 +41,7 @@ class ImageUploader extends Component {
           label="Max file size = 5mb"
           onChange={this.onDrop}
           imgExtension={[".jpg", ".gif", ".png"]}
-          buttonClassName="image-uploader__button"
+          buttonClassName="album-uploader__button"
         />
         <Button onClick={() => this.onUpload()}>Upload</Button>
       </React.Fragment>
@@ -49,4 +49,4 @@ class ImageUploader extends Component {
   }
 }
 
-export default ImageUploader
+export default AlbumUploader

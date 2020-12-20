@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Nav } from 'react-bootstrap'
 
-import './components.css'
+import './Album.css'
 
 class Sidebar extends Component {
 

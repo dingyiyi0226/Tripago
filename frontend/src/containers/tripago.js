@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
 
-import Header from '../components/header.js'
-import Album from '../components/albumWrapper.js'
+import Header from '../components/Header.js'
 import Home from '../components/Home.js'
 import Albums from '../components/Albums.js'
+import Album from '../components/Album'
 
 
 class Tripago extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

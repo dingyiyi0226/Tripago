@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import Sidebar from './sidebar.js'
-import Content from './content.js'
+import Sidebar from './AlbumSidebar.js'
+import Content from './AlbumContent.js'
 
 function Album() {
   const { id } = useParams();

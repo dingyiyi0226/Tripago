@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Switch, Route } from "react-router-dom"
 
-import ImageUploader from './imageUploader.js'
-import GoogleMap from './googleMap.js'
+import AlbumUploader from './AlbumUploader.js'
+import AlbumMap from './AlbumMap.js'
 
 class Content extends Component {
 
@@ -19,8 +19,8 @@ class Content extends Component {
           </Switch>
         </div>
         <Switch>
-          <Route path={`/albums/${id}/upload`} component={ImageUploader}/>
-          <Route path={`/albums/${id}/map`} component={GoogleMap}/>
+          <Route path={`/albums/${id}/upload`} component={AlbumUploader}/>
+          <Route path={`/albums/${id}/map`} component={AlbumMap}/>
         </Switch>
       </div>
     )

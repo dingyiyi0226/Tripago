@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import GoogleMap from 'google-map-react'
 
-import './components.css'
+import './Album.css'
 
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
 const NTUSportsCenter = {lat: 25.0222, lng: 121.5354}
@@ -20,7 +20,7 @@ const getInfoWindowString = (place) => `
     </div>
   </div>`;
 
-class googleMap extends Component {
+class AlbumMap extends Component {
   constructor(props) {
     super(props)
 
@@ -57,7 +57,7 @@ class googleMap extends Component {
     const { places } = this.state
     
     return (
-      <div className="google-map">
+      <div className="album-map">
         <GoogleMap
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
           defaultCenter={NTULibrary}
@@ -71,4 +71,4 @@ class googleMap extends Component {
   }
 }
 
-export default googleMap
+export default AlbumMap
