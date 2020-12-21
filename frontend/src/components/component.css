@@ -3,3 +3,8 @@
 .profile__text h6 {
   text-align: left;
 }
+
+/* AlbumsContent */
+.card {
+  width: 100%;
+}
