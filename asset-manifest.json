@@ -1,28 +1,29 @@
 {
   "files": {
-    "main.css": "/tripago/static/css/main.8dcb672d.chunk.css",
-    "main.js": "/tripago/static/js/main.a8b7ecf6.chunk.js",
-    "main.js.map": "/tripago/static/js/main.a8b7ecf6.chunk.js.map",
+    "main.css": "/tripago/static/css/main.d21b7d5c.chunk.css",
+    "main.js": "/tripago/static/js/main.f5fdaa41.chunk.js",
+    "main.js.map": "/tripago/static/js/main.f5fdaa41.chunk.js.map",
     "runtime-main.js": "/tripago/static/js/runtime-main.5ea41e84.js",
     "runtime-main.js.map": "/tripago/static/js/runtime-main.5ea41e84.js.map",
     "static/css/2.ba2755e9.chunk.css": "/tripago/static/css/2.ba2755e9.chunk.css",
-    "static/js/2.431eecbd.chunk.js": "/tripago/static/js/2.431eecbd.chunk.js",
-    "static/js/2.431eecbd.chunk.js.map": "/tripago/static/js/2.431eecbd.chunk.js.map",
+    "static/js/2.a5c74dd2.chunk.js": "/tripago/static/js/2.a5c74dd2.chunk.js",
+    "static/js/2.a5c74dd2.chunk.js.map": "/tripago/static/js/2.a5c74dd2.chunk.js.map",
     "static/js/3.9acdbf57.chunk.js": "/tripago/static/js/3.9acdbf57.chunk.js",
     "static/js/3.9acdbf57.chunk.js.map": "/tripago/static/js/3.9acdbf57.chunk.js.map",
     "index.html": "/tripago/index.html",
     "static/css/2.ba2755e9.chunk.css.map": "/tripago/static/css/2.ba2755e9.chunk.css.map",
-    "static/css/main.8dcb672d.chunk.css.map": "/tripago/static/css/main.8dcb672d.chunk.css.map",
-    "static/js/2.431eecbd.chunk.js.LICENSE.txt": "/tripago/static/js/2.431eecbd.chunk.js.LICENSE.txt",
+    "static/css/main.d21b7d5c.chunk.css.map": "/tripago/static/css/main.d21b7d5c.chunk.css.map",
+    "static/js/2.a5c74dd2.chunk.js.LICENSE.txt": "/tripago/static/js/2.a5c74dd2.chunk.js.LICENSE.txt",
     "static/media/UploadIcon.svg": "/tripago/static/media/UploadIcon.469126df.svg",
     "static/media/logo.6ce24c58.svg": "/tripago/static/media/logo.6ce24c58.svg",
-    "static/media/testpic.f038f9e1.png": "/tripago/static/media/testpic.f038f9e1.png"
+    "static/media/testpic.f038f9e1.png": "/tripago/static/media/testpic.f038f9e1.png",
+    "static/media/testpic2.bc0cfe5e.png": "/tripago/static/media/testpic2.bc0cfe5e.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5ea41e84.js",
     "static/css/2.ba2755e9.chunk.css",
-    "static/js/2.431eecbd.chunk.js",
-    "static/css/main.8dcb672d.chunk.css",
-    "static/js/main.a8b7ecf6.chunk.js"
+    "static/js/2.a5c74dd2.chunk.js",
+    "static/css/main.d21b7d5c.chunk.css",
+    "static/js/main.f5fdaa41.chunk.js"
   ]
 }
