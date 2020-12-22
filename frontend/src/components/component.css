@@ -4,6 +4,23 @@
   text-align: left;
 }
 
+/* Travel Map */
+.travel-map__container {
+  height: 100%;
+}
+
+.travel-map {
+  margin: auto;
+  padding-top: 10px;
+  
+  height: 60%;
+  width: 90%;
+}
+
+.info-window .place-name {
+  font-size: 14px;
+}
+
 /* AlbumsContent */
 .card {
   width: 100%;

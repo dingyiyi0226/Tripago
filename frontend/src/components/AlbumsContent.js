@@ -41,8 +41,6 @@ class AlbumsContent extends Component {
             }
           </Row>
         </Container>
-        
-
       </div>
     )
   }
