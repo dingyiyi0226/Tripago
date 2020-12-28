@@ -10,6 +10,7 @@ app.use(express.json())
 
 const port = process.env.PORT || 4000
 
+// store images to disk, cannot deploy to app engine
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
 
