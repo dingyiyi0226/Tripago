@@ -5,8 +5,8 @@ import { Button } from 'react-bootstrap'
 
 import './Album.css'
 
-const URL_ROOT = 'http://localhost:4000'
-// const URL_ROOT = 'https://my-tripago.an.r.appspot.com' // GCP App Engine URL
+// const URL_ROOT = 'http://localhost:4000'
+const URL_ROOT = 'https://my-tripago.an.r.appspot.com' // GCP App Engine URL
 
 const imageUploadInstance = axios.create({
   baseURL: URL_ROOT,
@@ -34,7 +34,8 @@ class AlbumUploader extends Component {
       formdata.append('photos', photo)
     })
 
-    let res = imageUploadInstance.post('/photos', formdata)
+    let res = await imageUploadInstance.post('/photos', formdata)
+    console.log(res)
   }
 
   render() {
