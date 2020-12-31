@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
 import Profile from './Profile.js'
-import AlbumsContent from './AlbumsContent.js'
+import AlbumsGallery from './AlbumsGallery.js'
 
 class Albums extends Component {
   
@@ -14,7 +14,7 @@ class Albums extends Component {
             <Profile />
           </Col>
           <Col xs={8} lg={9}>
-            <AlbumsContent />
+            <AlbumsGallery />
           </Col>
         </Row>
       </Container>

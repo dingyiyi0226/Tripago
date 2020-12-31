@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Switch, Route } from "react-router-dom"
 
+import AlbumGallery from './AlbumGallery.js'
 import AlbumUploader from './AlbumUploader.js'
 import AlbumMap from './AlbumMap.js'
 
@@ -19,6 +20,9 @@ class Content extends Component {
           </Switch>
         </div>
         <Switch>
+          <Route exact path={`/albums/${id}`}>
+            <AlbumGallery id={id}/>
+          </Route>
           <Route path={`/albums/${id}/upload`}>
             <AlbumUploader id={id}/>
           </Route>

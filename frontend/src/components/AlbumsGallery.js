@@ -6,7 +6,7 @@ import './component.css'
 import testpic from './testpic.png'
 import testpic2 from './testpic2.png'
 
-class AlbumsContent extends Component {
+class AlbumsGallery extends Component {
 
   constructor(props) {
     super(props)
@@ -46,4 +46,4 @@ class AlbumsContent extends Component {
   }
 }
 
-export default AlbumsContent
+export default AlbumsGallery
