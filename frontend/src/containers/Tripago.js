@@ -5,7 +5,8 @@ import Header from '../components/Header.js'
 import Home from '../components/Home.js'
 import Albums from '../components/Albums.js'
 import Album from '../components/Album'
-
+import Login from '../components/Login'
+import Registration from '../components/Registration'
 
 class Tripago extends Component {
 
@@ -26,7 +27,12 @@ class Tripago extends Component {
           <Route path="/albums/:id">
             <Album />
           </Route>
-
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Registration />
+          </Route>
         </Switch>
 
       </BrowserRouter>

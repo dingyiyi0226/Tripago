@@ -16,6 +16,14 @@ class Header extends Component {
             <Nav.Link as={NavLink} to="/albums">Albums</Nav.Link>
           </Nav.Item>
         </Nav>
+         <Nav className="justify-content-end">
+          <Nav.Item >
+            <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link as={NavLink} to="/login">Log in</Nav.Link>
+          </Nav.Item>
+        </Nav>
       </Navbar>
     )
   }
