@@ -5,15 +5,11 @@ class UnmatchedPwdAlert extends Component {
 	render() {
 		console.log(this.props.data)
 		let { password, passwordConfirm, passwordChanged, passwordConfirmChanged } = this.props.data;
-		if (passwordChanged && passwordConfirmChanged && (password !== passwordConfirm)) {
-			return (
-				<Alert variant="warning">
-					unmatched passwords!
-				</Alert>
-				);
-		} else {
-			return <div/>;
-		}
+		return (passwordChanged && passwordConfirmChanged && (password !== passwordConfirm)) ?
+			(<Alert variant="warning">
+				unmatched passwords!
+			</Alert>): 
+			(<div/>)
 	}
 }
 
