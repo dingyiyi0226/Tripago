@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Form, Button, Alert } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 class LoginAlert extends Component {
 	render() {
@@ -9,9 +10,8 @@ class LoginAlert extends Component {
 					{this.props.errorMessage}
 				</Alert>
 			);
-		} else {
-			return <div/>
 		}
+		return <div/>
 	}
 }
 
@@ -21,7 +21,8 @@ class Login extends Component {
 		this.state = {
 			email: "",
 			password: "",
-			errorMessage: ""
+			errorMessage: "",
+			redirect: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +37,16 @@ class Login extends Component {
 
 	handleSubmit = (event => {
 		event.preventDefault();
-	})
+		// if successfully login
+		// TODOs
+		this.setState({redirect: true});
+	});
+
+	renderRedirect = (() => {
+		if (this.state.redirect) {
+			return <Redirect to='/home'/>;
+		} 
+	});
 
 	render() {
 		return (
@@ -61,7 +71,9 @@ class Login extends Component {
 				    value={this.state.password}
 				    onChange={this.handleChange} />
 				  </Form.Group>
-				  <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+				  {this.renderRedirect()}
+				  <Button 
+				  	variant="primary" type="submit" onClick={this.handleSubmit}>
 				    Login
 				  </Button>
 				</Form>

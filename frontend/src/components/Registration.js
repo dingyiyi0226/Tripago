@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { Form, Button, Alert } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
+
 
 class UnmatchedPwdAlert extends Component {
 	render() {
@@ -36,7 +38,8 @@ class Registration extends Component {
 			passwordConfirm: "",
 			passwordChanged: false,
 			passwordConfirmChanged: false,
-			errorMessage: ""
+			errorMessage: "",
+			redirect: false
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +56,16 @@ class Registration extends Component {
 
 	handleSubmit = (event => {
 		event.preventDefault();
-	})
+		// if successfully register
+		// TODOs
+		this.setState({redirect: true});
+	});
+
+	renderRedirect = (() => {
+		if (this.state.redirect) {
+			return <Redirect to='/home'/>;
+		} 
+	});
 
 	render() {
 		return (
@@ -91,6 +103,7 @@ class Registration extends Component {
 				  <div style={{"width": "80%", "margin":"auto"}}>
 					  <UnmatchedPwdAlert data={this.state}/>
 				  </div>
+				  {this.renderRedirect()}
 				  <Button variant="primary" type="submit" onClick={this.handleSubmit}>
 				    Register
 				  </Button>
