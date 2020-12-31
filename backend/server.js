@@ -31,14 +31,25 @@ const MAX_FILE = 12
           photos/
             photo1:
               url
-              geopoint
+              location
             photo2:
         album2:
     user2:
  */
 
 
-app.post('/photos', upload.array('photos', MAX_FILE), async (req, res, next) => {
+app.post('/get-photos', async (req, res) => {
+  const { album } = req.body
+  // console.log(album)
+  const photoSnapshot = await firestore.collection(`users/${USER}/albums/${album}/photos`).get()
+  const photos = []
+  photoSnapshot.forEach( photo => {
+    photos.push(photo.data())
+  })
+  res.status(200).send(photos)
+})
+
+app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, next) => {
   if (!req.files.length){
     console.log('error')
     res.status(400).send({ message: 'No file uploaded' })

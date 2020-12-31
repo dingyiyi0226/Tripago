@@ -5,8 +5,8 @@ import { Button } from 'react-bootstrap'
 
 import './Album.css'
 
-// const URL_ROOT = 'http://localhost:4000'
-const URL_ROOT = 'https://our-tripago.an.r.appspot.com' // GCP App Engine URL
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+
 
 const imageUploadInstance = axios.create({
   baseURL: URL_ROOT,
@@ -16,7 +16,10 @@ const imageUploadInstance = axios.create({
 class AlbumUploader extends Component {
   constructor(props) {
     super(props);
-    this.state = { photos: [] }; // type: [File,]
+    this.state = {
+      photos: [],  // Type: [File,]
+      key: 0
+    };
   }
 
   onDrop = (pictureFiles, pictureDataURLs) => {
@@ -34,14 +37,18 @@ class AlbumUploader extends Component {
       formdata.append('photos', photo)
     })
 
-    let res = await imageUploadInstance.post('/photos', formdata)
+    let res = await imageUploadInstance.post('/upload-photos', formdata)
     console.log(res)
+    this.setState( state => ({
+      photos: [],
+      key: state.key+1
+    }));
   }
 
   render() {
     return (
       <React.Fragment>
-        <ImageUploadField
+        <ImageUploadField key={this.state.key}
           withPreview={true}
           buttonText="Choose photos"
           label="Max file size = 5mb"

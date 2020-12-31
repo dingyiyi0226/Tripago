@@ -15,6 +15,7 @@ async function photoProcessing(file, user, album) {
     const blob = cloudBucket.file(`${user}/${album}/${file.originalname}`);
     const blobStream = blob.createWriteStream({
       resumable: false,
+      public: true
     });
 
     blobStream.on('error', err => {
