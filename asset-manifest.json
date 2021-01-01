@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/tripago/static/css/main.696c4358.chunk.css",
-    "main.js": "/tripago/static/js/main.f26df51d.chunk.js",
-    "main.js.map": "/tripago/static/js/main.f26df51d.chunk.js.map",
+    "main.js": "/tripago/static/js/main.4416ae71.chunk.js",
+    "main.js.map": "/tripago/static/js/main.4416ae71.chunk.js.map",
     "runtime-main.js": "/tripago/static/js/runtime-main.06da32e3.js",
     "runtime-main.js.map": "/tripago/static/js/runtime-main.06da32e3.js.map",
     "static/css/2.ba2755e9.chunk.css": "/tripago/static/css/2.ba2755e9.chunk.css",
@@ -24,6 +24,6 @@
     "static/css/2.ba2755e9.chunk.css",
     "static/js/2.6d0f286f.chunk.js",
     "static/css/main.696c4358.chunk.css",
-    "static/js/main.f26df51d.chunk.js"
+    "static/js/main.4416ae71.chunk.js"
   ]
 }
