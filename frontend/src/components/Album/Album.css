@@ -40,6 +40,11 @@
   width: 90%;
 }
 
-.info-window .place-name {
+.info-window img {
+  width: 100pt;
+}
+
+.info-window p {
   font-size: 14px;
+  margin-bottom: 0.25rem;
 }

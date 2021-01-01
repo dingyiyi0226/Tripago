@@ -37,7 +37,7 @@ const MAX_FILE = 12
     user2:
  */
 
-app.get('/album', async (req, res) => {
+app.get('/albumphotos', async (req, res) => {
   const { album } = req.query
 
   const photoSnapshot = await firestore.collection(`users/${USER}/albums/${album}/photos`).get()

@@ -1,5 +1,6 @@
 import { Storage } from '@google-cloud/storage'
 import { Firestore } from '@google-cloud/firestore'
+import exifr from 'exifr'
 
 const cloudStorage = new Storage()
 const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
@@ -10,7 +11,19 @@ async function photoProcessing(file, user, album) {
 
   let photoUrl = ''
   let photoLoc = {}
+  let noLoc = true
 
+  const parsePhoto = async () => {
+    let loc = await exifr.gps(file.buffer)
+    if(loc) {
+      photoLoc = {lat: loc.latitude, lng: loc.longitude}
+      noLoc = false
+    }
+    else {
+      console.log('no location')
+    }
+  }
+  
   const upload2Storage = new Promise((resolve, reject) => {
     const blob = cloudBucket.file(`${user}/${album}/${file.originalname}`);
     const blobStream = blob.createWriteStream({
@@ -29,20 +42,24 @@ async function photoProcessing(file, user, album) {
     blobStream.end(file.buffer);
   })
 
-  const parsePhoto = async () => {
-    photoLoc = {lat: 25.2, lng: 121.3}
-  }
-
   const upload2Database = async () => {
     const photoDoc = firestore.doc(`users/${user}/albums/${album}/photos/${file.originalname}`)
-    let res = await photoDoc.set({
-      url: photoUrl,
-      location: new Firestore.GeoPoint(photoLoc.lat, photoLoc.lng)
-    })
+
+    if(noLoc){
+      let res = await photoDoc.set({
+        url: photoUrl,
+      })
+    }
+    else {
+      let res = await photoDoc.set({
+        url: photoUrl,
+        location: new Firestore.GeoPoint(photoLoc.lat, photoLoc.lng)
+      })
+    }
   }
 
-  await upload2Storage
   await parsePhoto()
+  await upload2Storage
   await upload2Database()
 
   console.log(`finish processing ${file.originalname}`)

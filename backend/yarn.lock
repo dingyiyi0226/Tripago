@@ -1818,6 +1818,11 @@ event-target-shim@^5.0.0:
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
+exifr@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/exifr/-/exifr-6.0.0.tgz#e82af10e158852a1c7e19aea45bceb4cdd486727"
+  integrity sha512-a8n3SVIyuI5NP5VJCb/rJHsqXnofgYL1ZXcJdKBXOmCNIrj+pSExaBFHcbdEF5xp5GQrK4kpOabLJ+wBfUGYuA==
+
 expand-brackets@^2.1.4:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-2.1.4.tgz#b77735e315ce30f6b6eff0f83b04151a22449622"
