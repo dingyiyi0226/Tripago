@@ -29,7 +29,7 @@ class AlbumsGallery extends Component {
               </Card>
             </Col>
             { this.state.albumList.map(album =>
-                <Col className="p-3">
+                <Col className="p-3" key={album}>
                   <Card as={NavLink} to={`albums/${album}`}>
                     <Card.Img variant="top" src={testpic2} />
                     <Card.Body>

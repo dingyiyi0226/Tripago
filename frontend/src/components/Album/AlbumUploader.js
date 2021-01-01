@@ -18,7 +18,7 @@ class AlbumUploader extends Component {
     super(props);
     this.state = {
       photos: [],  // Type: [File,]
-      key: 0
+      key: 0       // Rerender imageuploadfield after upload
     };
   }
 

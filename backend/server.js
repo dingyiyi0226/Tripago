@@ -37,17 +37,33 @@ const MAX_FILE = 12
     user2:
  */
 
+app.get('/album', async (req, res) => {
+  const { album } = req.query
 
-app.post('/get-photos', async (req, res) => {
-  const { album } = req.body
-  // console.log(album)
   const photoSnapshot = await firestore.collection(`users/${USER}/albums/${album}/photos`).get()
   const photos = []
   photoSnapshot.forEach( photo => {
-    photos.push(photo.data())
+    photos.push({id: photo.id, ...photo.data()})
   })
   res.status(200).send(photos)
 })
+
+
+app.delete('/photo', async (req, res) => {
+  const { album, photo } = req.query
+
+  const photoFile = await cloudBucket.file(`${USER}/${album}/${photo}`);
+  const photoDoc = await firestore.doc(`users/${USER}/albums/${album}/photos/${photo}`);
+
+  await photoFile.delete()
+  await photoDoc.delete()
+  // console.log('finish delete', album, photo)
+
+  res.status(200).send()
+
+})
+
+
 
 app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, next) => {
   if (!req.files.length){

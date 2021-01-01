@@ -34,7 +34,7 @@ async function photoProcessing(file, user, album) {
   }
 
   const upload2Database = async () => {
-    const photoDoc = firestore.collection(`users/${user}/albums/${album}/photos/`).doc()
+    const photoDoc = firestore.doc(`users/${user}/albums/${album}/photos/${file.originalname}`)
     let res = await photoDoc.set({
       url: photoUrl,
       location: new Firestore.GeoPoint(photoLoc.lat, photoLoc.lng)
