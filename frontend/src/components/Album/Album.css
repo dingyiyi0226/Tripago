@@ -26,9 +26,36 @@
 
 
 /* Album Uploader */
+/* override the default style */
+
+.album-uploader {
+  width: 70% !important;
+  margin: auto;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05) !important;
+}
+
 .album-uploader__button {
   font-family: inherit;
-  font-weight: 600 !important; /* override the default style */
+  font-weight: 600 !important;
+  font-size: .765625rem !important;
+  text-transform: uppercase !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0 !important;
+  background-color: #1a1a1a !important;
+}
+
+.fileContainer .uploadPictureContainer {
+  width: 15% !important;
+  margin: 1% !important;
+  background-color: white !important;
+  box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05) !important;
+}
+
+.fileContainer .deleteImage {
+  color: transparent !important;
+  background-color: white !important;
+  background-image: url(./close-circle-outline.png) !important;
+  background-size: 30px !important;
 }
 
 /* Album Map */

@@ -48,7 +48,7 @@ class AlbumUploader extends Component {
   render() {
     return (
       <React.Fragment>
-        <ImageUploadField key={this.state.key}
+        <ImageUploadField key={this.state.key} className="album-uploader"
           withPreview={true}
           buttonText="Choose photos"
           label="Max file size = 5mb"
