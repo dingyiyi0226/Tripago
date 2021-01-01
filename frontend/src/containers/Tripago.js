@@ -5,8 +5,8 @@ import Header from '../components/Header.js'
 import Home from '../components/Home.js'
 import Albums from '../components/Albums.js'
 import Album from '../components/Album'
-import Login from '../components/Login'
-import Registration from '../components/Registration'
+import Login from '../components/auth/Login'
+import Registration from '../components/auth/Registration'
 
 class Tripago extends Component {
 
