@@ -38,6 +38,15 @@ const MAX_FILE = 12
   - user2
  */
 
+app.get('/albums', async (req, res) => {
+  const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
+  const albums = []
+  albumsSnapshot.forEach( album => {
+    albums.push({id: album.id, ...album.data()})
+  })
+  res.status(200).send(albums)
+})
+
 app.get('/album-photos', async (req, res) => {
   const { album } = req.query
 
@@ -71,6 +80,8 @@ app.delete('/photo', async (req, res) => {
   await photoFile.delete()
   await photoDoc.delete()
   // console.log('finish delete', album, photo)
+
+  await updateAlbumCoverPhoto(USER, album)
 
   res.status(200).send()
 
