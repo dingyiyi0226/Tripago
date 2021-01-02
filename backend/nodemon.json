@@ -1,6 +1,7 @@
 {
   "watch": [
-    "server.js"
+    "server.js",
+    "photoProcessing.js"
   ],
   "ext": "js,json",
   "ignore": [

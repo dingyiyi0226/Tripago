@@ -23,7 +23,7 @@ async function photoProcessing(file, user, album) {
       console.log('no location')
     }
   }
-  
+
   const upload2Storage = new Promise((resolve, reject) => {
     const blob = cloudBucket.file(`${user}/${album}/${file.originalname}`);
     const blobStream = blob.createWriteStream({
@@ -65,4 +65,25 @@ async function photoProcessing(file, user, album) {
   console.log(`finish processing ${file.originalname}`)
 }
 
-export default photoProcessing
+async function updateAlbumCoverPhoto(user, album) {
+
+  const albumSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+  // console.log('update', albumSnapshot)
+  const albumData = albumSnapshot.data()
+
+  if (albumData && albumData.coverPhoto) {
+    console.log('had coverphoto already')
+  }
+  else {
+    console.log('change coverphoto')
+    const coverPhotoSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).limit(1).get()
+    const coverPhotoData = coverPhotoSnapshot.docs[0].data()
+    // console.log(coverPhotoData)
+    const albumDoc = await firestore.doc(`users/${user}/albums/${album}`)
+    await albumDoc.set({
+      coverPhoto: coverPhotoData
+    })
+  }
+}
+
+export { photoProcessing, updateAlbumCoverPhoto }

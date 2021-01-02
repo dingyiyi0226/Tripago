@@ -4,7 +4,7 @@ import multer from 'multer'
 import { Storage } from '@google-cloud/storage'
 import { Firestore } from '@google-cloud/firestore'
 
-import photoProcessing from './photoProcessing.js'
+import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
 
 const app = express()
 app.use(cors())
@@ -23,29 +23,42 @@ const MAX_FILE = 12
 /**
   DB Schema (temp version)
   users/
-    user1:
-      description
+  - user1
+      description: String
       albums/
-        album1:
-          description
+      - album1:
+          description: String
+          coverPhoto: {url: String, location: GeoPoint}
           photos/
-            photo1:
-              url
-              location
-            photo2:
-        album2:
-    user2:
+          - photo1:
+              url: String
+              location: GeoPoint
+          - photo2:
+      - album2:
+  - user2
  */
 
-app.get('/albumphotos', async (req, res) => {
+app.get('/album-photos', async (req, res) => {
   const { album } = req.query
 
-  const photoSnapshot = await firestore.collection(`users/${USER}/albums/${album}/photos`).get()
+  const photosSnapshot = await firestore.collection(`users/${USER}/albums/${album}/photos`).get()
   const photos = []
-  photoSnapshot.forEach( photo => {
+  photosSnapshot.forEach( photo => {
     photos.push({id: photo.id, ...photo.data()})
   })
   res.status(200).send(photos)
+})
+
+app.get('/album-coverphoto', async (req, res) => {
+  const { album } = req.query
+  const coverPhotoSnapshot = await firestore.doc(`users/${USER}/albums/${album}`).get()
+
+  if (coverPhotoSnapshot.data() && coverPhotoSnapshot.data().coverPhoto) {
+    res.status(200).send(coverPhotoSnapshot.data().coverPhoto)
+  }
+  else {
+    res.status(200).send()
+  }
 })
 
 
@@ -64,7 +77,6 @@ app.delete('/photo', async (req, res) => {
 })
 
 
-
 app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, next) => {
   if (!req.files.length){
     console.log('error')
@@ -77,6 +89,7 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   for (let file of req.files) {
     await photoProcessing(file, USER, album)  // Should the server response to client immediatly or await photo upload to db or not ?
   }
+  await updateAlbumCoverPhoto(USER, album)
   res.status(200).send();
 })
 

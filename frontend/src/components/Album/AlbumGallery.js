@@ -22,7 +22,7 @@ class AlbumGallery extends Component {
 
   componentDidMount(){
     const getAlbum = async () => {
-      const res = await instance.get('/albumphotos', { params: {album: this.props.id}})
+      const res = await instance.get('/album-photos', { params: {album: this.props.id}})
       this.setState({
         fetching: false,
         photos: res.data

@@ -11,13 +11,6 @@ const instance = axios.create({
 })
 
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
-const NTUSportsCenter = {lat: 25.0222, lng: 121.5354}
-const NTUCommon = {lat: 25.0160, lng: 121.5375}
-
-const PLACES = [
-  {name: 'NTUSportsCenter', 'location': NTUSportsCenter},
-  {name: 'NTUCommon', 'location': NTUCommon},
-]
 
 const getInfoWindowString = (photo) => `
   <div class="info-window">
@@ -28,21 +21,33 @@ const getInfoWindowString = (photo) => `
 class AlbumMap extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      places: PLACES,
       fetching: true,
-      photos: []  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
+      photos: [],  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
+      defaultCenter: NTULibrary  // Set default center by album cover photo
     }
   }
 
   componentDidMount() {
     const getAlbum = async () => {
-      const res = await instance.get('/albumphotos', { params: {album: this.props.id}})
-      this.setState({
-        fetching: false,
-        photos: res.data
-      })
+      const photos = await instance.get('/album-photos', { params: {album: this.props.id}})
+
+      const coverPhoto = await instance.get('album-coverphoto', { params: {album: this.props.id}})
+
+      if (!coverPhoto.data) {
+        this.setState({
+          fetching: false,
+          photos: photos.data,
+        })
+      }
+      else {
+        this.setState({
+          fetching: false,
+          photos: photos.data,
+          defaultCenter: {lat: coverPhoto.data.location._latitude, lng: coverPhoto.data.location._longitude}
+        })
+      }
+
     }
     getAlbum()
   }
@@ -51,7 +56,8 @@ class AlbumMap extends Component {
     const markers = [];
     const infowindows = [];
 
-    photos.forEach( photo => {
+    photos.filter( photo => photo.location)
+          .forEach( photo => {
       console.log(photo.id)
       markers.push(new maps.Marker({
         position: {
@@ -83,8 +89,8 @@ class AlbumMap extends Component {
         <div className="album-map">
           <GoogleMap
             bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-            defaultCenter={NTULibrary}
-            defaultZoom={15}
+            defaultCenter={this.state.defaultCenter}
+            defaultZoom={10}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos)}
           >
