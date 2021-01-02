@@ -72,6 +72,8 @@ app.delete('/photo', async (req, res) => {
   await photoDoc.delete()
   // console.log('finish delete', album, photo)
 
+  await updateAlbumCoverPhoto(USER, album)
+
   res.status(200).send()
 
 })

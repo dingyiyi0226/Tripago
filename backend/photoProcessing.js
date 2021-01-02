@@ -71,19 +71,15 @@ async function updateAlbumCoverPhoto(user, album) {
   // console.log('update', albumSnapshot)
   const albumData = albumSnapshot.data()
 
-  if (albumData && albumData.coverPhoto) {
-    console.log('had coverphoto already')
-  }
-  else {
-    console.log('change coverphoto')
-    const coverPhotoSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).limit(1).get()
-    const coverPhotoData = coverPhotoSnapshot.docs[0].data()
-    // console.log(coverPhotoData)
-    const albumDoc = await firestore.doc(`users/${user}/albums/${album}`)
-    await albumDoc.set({
-      coverPhoto: coverPhotoData
-    })
-  }
+  console.log('change coverphoto')
+  const coverPhotoSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).limit(1).get()
+  const coverPhotoData = coverPhotoSnapshot.docs[0].data()
+  // console.log(coverPhotoData)
+  const albumDoc = await firestore.doc(`users/${user}/albums/${album}`)
+  await albumDoc.set({
+    coverPhoto: coverPhotoData
+  })
+
 }
 
 export { photoProcessing, updateAlbumCoverPhoto }
