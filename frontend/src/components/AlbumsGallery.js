@@ -1,48 +1,78 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import { Card, Container, Row, Col } from 'react-bootstrap'
 
 import './component.css'
 import testpic from './testpic.png'
-import testpic2 from './testpic2.png'
+import albumDefaultCover from './testpic2.png'
+
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+
+const instance = axios.create({
+  baseURL: URL_ROOT
+})
 
 class AlbumsGallery extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      'albumList': ['mytrip1', 'mytrip2', 'mytrip3', 'mytrip4', 'mytrip5']
+      fetching: true,
+      albums: []
     }
   }
 
+  componentDidMount(){
+    const getAlbums = async () => {
+      const res = await instance.get('/albums', { params: {album: this.props.id}})
+      console.log(res.data)
+      this.setState({
+        fetching: false,
+        albums: res.data
+      })
+    }
+    getAlbums()
+  }
+
   render () {
-    return (
-      <div className="p-4">
-        <Container>
-          <Row xs={1} sm={2} md={3} lg={4}>
-            <Col className="p-3">
-              <Card>
-                <Card.Img variant="top" src={ testpic } />
-                <Card.Body>
-                  <Card.Title>Click to Add</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-            { this.state.albumList.map(album =>
-                <Col className="p-3" key={album}>
-                  <Card as={NavLink} to={`albums/${album}`}>
-                    <Card.Img variant="top" src={testpic2} />
-                    <Card.Body>
-                      <Card.Title>{`${album}`}</Card.Title>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              )
-            }
-          </Row>
-        </Container>
-      </div>
-    )
+    if(this.state.fetching) {
+      return <h3>Fetching Photos</h3>
+    }
+    else {
+      return (
+        <div className="p-4">
+          <Container>
+            <Row xs={1} sm={2} md={3} lg={4}>
+              <Col className="p-3">
+                <Card>
+                  <Card.Img variant="top" src={ testpic } />
+                  <Card.Body>
+                    <Card.Title>Click to Add</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+              { this.state.albums.map(album =>
+                  <Col className="p-3" key={album.id}>
+                    <Card as={NavLink} to={`albums/${album.id}`}>
+                      { !album.coverPhoto || !album.coverPhoto.url ? (
+                          <Card.Img variant="top" src={albumDefaultCover} />
+                        ) : (
+                          <Card.Img variant="top" src={album.coverPhoto.url} />
+                        )
+                      }
+                      <Card.Body>
+                        <Card.Title>{`${album.id}`}</Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                )
+              }
+            </Row>
+          </Container>
+        </div>
+      )
+    }
   }
 }
 
