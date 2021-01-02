@@ -29,7 +29,9 @@ const UserButtons = () => {
         logout();
         setIsLogin(false);
     }}>
-      <Nav.Link as={NavLink} to="/login">Log out</Nav.Link>
+      <Nav.Link as={NavLink} to="/login">
+        Log out
+      </Nav.Link>
     </Nav.Item>
   </Nav>
   );

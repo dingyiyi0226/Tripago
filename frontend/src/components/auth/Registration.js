@@ -2,6 +2,7 @@ import React, { Component, useContext } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { register } from './authenticate'
+import LoginContext from '../../LoginContext.js'
 
 
 class UnmatchedPwdAlert extends Component {
@@ -29,6 +30,32 @@ class RegistrationAlert extends Component {
 		}
 	}
 }
+
+const LoginButton = (email, password) => {
+	const {isLogin, setIsLogin} = useContext(LoginContext);
+	const renderRedirect = () => {
+		if(isLogin) {
+			return <Redirect to='/home'/>;
+		}
+	};
+	return (
+		<div>
+			<Button 
+				variant="primary" 
+				type="submit" 
+				onClick={(e) => {
+					const tmp = register(email, password);
+					if (tmp) {
+						setIsLogin(true);
+					}
+				}}
+			>
+			Login
+			</Button>
+			{renderRedirect()}
+		</div>
+	);
+};
 
 class Registration extends Component {
 	constructor(props) {

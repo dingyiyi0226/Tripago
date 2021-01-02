@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { login } from './authenticate'
@@ -20,26 +20,42 @@ class LoginAlert extends Component {
 
 const LoginButton = (email, password) => {
 	const {isLogin, setIsLogin} = useContext(LoginContext);
+	const [errorMessage, setErrorMessage] = useState("");
+
 	const renderRedirect = () => {
 		if(isLogin) {
+			console.log('redirect rendered')
 			return <Redirect to='/home'/>;
 		}
 	};
+
+	const handleClick = async (e) => {
+		const { status, message } = await login(email, password);
+		console.log('Received login status: ', status, message)
+		if (status) {
+			setIsLogin(true);
+		} else {
+			setErrorMessage(message);
+			console.log(message)
+			setIsLogin(false);
+		}
+		console.log('Is login after clicking: ', isLogin)
+	};
+
 	return (
 		<div>
 			<Button 
 				variant="primary" 
 				type="submit" 
-				onClick={(e) => {
-					const tmp = login(email, password);
-					if (tmp) {
-						setIsLogin(true);
-					}
-				}}
+				onClick={handleClick}
 			>
 			Login
 			</Button>
 			{renderRedirect()}
+			<br/>
+			<div style={{"width": "80%", "margin":"auto"}}>
+				<LoginAlert errorMessage={errorMessage}/>
+			</div>
 		</div>
 	);
 };
@@ -50,7 +66,6 @@ class Login extends Component {
 		this.state = {
 			email: "",
 			password: "",
-			errorMessage: "",
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -60,12 +75,6 @@ class Login extends Component {
 		this.setState({
 			[name]: value
 		});
-	});
-
-	renderRedirect = (() => {
-		if (this.state.redirect) {
-			return <Redirect to='/home'/>;
-		} 
 	});
 
 	render() {
@@ -93,10 +102,6 @@ class Login extends Component {
 				  </Form.Group>
 				  <LoginButton email={this.state.email} password={this.state.password}/>
 				</Form>
-				<br/>
-				<div style={{"width": "60%", "margin":"auto"}}>
-					<LoginAlert errorMessage={this.state.errorMessage}/>
-				</div>
 			</div>);
 	}
 }

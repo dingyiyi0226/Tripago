@@ -7,8 +7,9 @@ import Tripago from './containers/Tripago.js';
 import LoginContext from './LoginContext.js';
 
 function App() {
-	const [isLogin, setIsLogin] = useState(true);
+	const [isLogin, setIsLogin] = useState(false);
 	const value = { isLogin, setIsLogin };
+	
 
   return (
     <div className="App">
