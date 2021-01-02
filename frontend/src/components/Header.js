@@ -6,7 +6,7 @@ import LoginContext from '../LoginContext.js'
 import { logout } from './auth/authenticate'
 
 const UserButtons = () => {
-  const {isLogin, setIsLogin} = useContext(LoginContext)
+  const {isLogin, setIsLogin} = useContext(LoginContext);
   // console.log(isLogin, setIsLogin)
 
   if (!isLogin) {
