@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/tripago/static/css/main.696c4358.chunk.css",
-    "main.js": "/tripago/static/js/main.4416ae71.chunk.js",
-    "main.js.map": "/tripago/static/js/main.4416ae71.chunk.js.map",
-    "runtime-main.js": "/tripago/static/js/runtime-main.06da32e3.js",
-    "runtime-main.js.map": "/tripago/static/js/runtime-main.06da32e3.js.map",
+    "main.css": "/tripago/static/css/main.82271161.chunk.css",
+    "main.js": "/tripago/static/js/main.51f20d88.chunk.js",
+    "main.js.map": "/tripago/static/js/main.51f20d88.chunk.js.map",
+    "runtime-main.js": "/tripago/static/js/runtime-main.f77b1269.js",
+    "runtime-main.js.map": "/tripago/static/js/runtime-main.f77b1269.js.map",
     "static/css/2.ba2755e9.chunk.css": "/tripago/static/css/2.ba2755e9.chunk.css",
-    "static/js/2.6d0f286f.chunk.js": "/tripago/static/js/2.6d0f286f.chunk.js",
-    "static/js/2.6d0f286f.chunk.js.map": "/tripago/static/js/2.6d0f286f.chunk.js.map",
-    "static/js/3.e89c8727.chunk.js": "/tripago/static/js/3.e89c8727.chunk.js",
-    "static/js/3.e89c8727.chunk.js.map": "/tripago/static/js/3.e89c8727.chunk.js.map",
+    "static/js/2.cfe6d694.chunk.js": "/tripago/static/js/2.cfe6d694.chunk.js",
+    "static/js/2.cfe6d694.chunk.js.map": "/tripago/static/js/2.cfe6d694.chunk.js.map",
+    "static/js/3.50fb8d7f.chunk.js": "/tripago/static/js/3.50fb8d7f.chunk.js",
+    "static/js/3.50fb8d7f.chunk.js.map": "/tripago/static/js/3.50fb8d7f.chunk.js.map",
     "index.html": "/tripago/index.html",
     "static/css/2.ba2755e9.chunk.css.map": "/tripago/static/css/2.ba2755e9.chunk.css.map",
-    "static/css/main.696c4358.chunk.css.map": "/tripago/static/css/main.696c4358.chunk.css.map",
-    "static/js/2.6d0f286f.chunk.js.LICENSE.txt": "/tripago/static/js/2.6d0f286f.chunk.js.LICENSE.txt",
+    "static/css/main.82271161.chunk.css.map": "/tripago/static/css/main.82271161.chunk.css.map",
+    "static/js/2.cfe6d694.chunk.js.LICENSE.txt": "/tripago/static/js/2.cfe6d694.chunk.js.LICENSE.txt",
     "static/media/UploadIcon.svg": "/tripago/static/media/UploadIcon.469126df.svg",
     "static/media/logo.6ce24c58.svg": "/tripago/static/media/logo.6ce24c58.svg",
     "static/media/testpic.f038f9e1.png": "/tripago/static/media/testpic.f038f9e1.png",
     "static/media/testpic2.bc0cfe5e.png": "/tripago/static/media/testpic2.bc0cfe5e.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.06da32e3.js",
+    "static/js/runtime-main.f77b1269.js",
     "static/css/2.ba2755e9.chunk.css",
-    "static/js/2.6d0f286f.chunk.js",
-    "static/css/main.696c4358.chunk.css",
-    "static/js/main.4416ae71.chunk.js"
+    "static/js/2.cfe6d694.chunk.js",
+    "static/css/main.82271161.chunk.css",
+    "static/js/main.51f20d88.chunk.js"
   ]
 }
