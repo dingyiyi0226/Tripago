@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { NavLink } from 'react-router-dom'
 import { Button, Card, Container, Row, Col } from 'react-bootstrap'
 
 import './Album.css'
+import crossImg from './close-circle-outline.png'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 
@@ -52,9 +54,17 @@ class AlbumGallery extends Component {
                 <Col className="p-3" key={photo.id}>
                   <Card>
                     <Card.Img src={photo.url} />
-                    <Card.ImgOverlay>
-                      <Button variant="danger" onClick={() => this.onDeletePhoto(photo.id)}> Delete</Button>
-                    </Card.ImgOverlay>
+                    <img className="cross" src={crossImg} onClick={() => this.onDeletePhoto(photo.id)}/>
+                    { !photo.location ? (
+                        <Card.Footer>
+                          NO LOCATION INFO
+                        </Card.Footer>
+                      ) : (
+                        <Card.Footer as={NavLink} to={`/albums/${this.props.id}/map`}>
+                          SHOW ON MAP
+                        </Card.Footer>
+                      )
+                    }
                   </Card>
                 </Col>
               )

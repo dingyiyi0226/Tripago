@@ -34,7 +34,7 @@ class AlbumMap extends Component {
 
       const coverPhoto = await instance.get('album-coverphoto', { params: {album: this.props.id}})
 
-      if (!coverPhoto.data) {
+      if (!coverPhoto.data || !coverPhoto.data.location) {
         this.setState({
           fetching: false,
           photos: photos.data,
