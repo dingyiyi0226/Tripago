@@ -73,13 +73,19 @@ async function updateAlbumCoverPhoto(user, album) {
 
   console.log('change coverphoto')
   const coverPhotoSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).limit(1).get()
-  const coverPhotoData = coverPhotoSnapshot.docs[0].data()
-  // console.log(coverPhotoData)
   const albumDoc = await firestore.doc(`users/${user}/albums/${album}`)
-  await albumDoc.set({
-    coverPhoto: coverPhotoData
-  })
 
+  if (coverPhotoSnapshot.empty) {
+    await albumDoc.set({
+      coverPhoto: {}
+    })
+  }
+  else {
+    const coverPhotoData = coverPhotoSnapshot.docs[0].data()
+    await albumDoc.set({
+      coverPhoto: coverPhotoData
+    })
+  }
 }
 
 export { photoProcessing, updateAlbumCoverPhoto }
