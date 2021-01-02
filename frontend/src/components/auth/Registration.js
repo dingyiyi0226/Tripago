@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 class UnmatchedPwdAlert extends Component {
 	render() {
-		console.log(this.props.data)
+		// console.log(this.props.data)
 		let { password, passwordConfirm, passwordChanged, passwordConfirmChanged } = this.props.data;
 		return (passwordChanged && passwordConfirmChanged && (password !== passwordConfirm)) ?
 			(<Alert variant="warning">
