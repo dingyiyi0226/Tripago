@@ -1,3 +1,9 @@
+/* Album Sidebar */
+.sidebar__description {
+  text-align: left;
+  font-style: italic;
+}
+
 /* Album Gallery */
 .card {
   width: 100%;

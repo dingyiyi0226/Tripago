@@ -70,6 +70,18 @@ app.get('/album-coverphoto', async (req, res) => {
   }
 })
 
+app.get('/album-description', async (req, res) => {
+  const { album } = req.query
+  const albumSnapshot = await firestore.doc(`users/${USER}/albums/${album}`).get()
+
+  if (albumSnapshot.data() && albumSnapshot.data().description) {
+    res.status(200).send(albumSnapshot.data().description)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+
 
 app.delete('/photo', async (req, res) => {
   const { album, photo } = req.query
