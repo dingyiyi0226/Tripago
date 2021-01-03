@@ -48,7 +48,7 @@ class AlbumGallery extends Component {
     }
     else {
       return (
-        <Container>
+        <Container className="album-gallery">
           <Row xs={1} sm={2} md={3} lg={4}>
             { this.state.photos.map(photo =>
                 <Col className="p-3" key={photo.id}>

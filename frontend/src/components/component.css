@@ -17,33 +17,33 @@
   width: 90%;
 }
 
-.info-window img {
+.travel-map__info-window img {
   width: 100pt;
 }
 
-.info-window p {
+.travel-map__info-window p {
   font-size: 14px;
   margin-bottom: 0.25rem;
 }
 
 /* Albums Gallery */
-.card {
+.albums-gallery .card {
   width: 100%;
   box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
 }
 
-.card:hover {
+.albums-gallery .card:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
-.card-img__wrapper {
+.albums-gallery  .card-img__wrapper {
   padding-bottom: 100%;
   overflow: hidden;
   position: relative;
   background-color: #EAEAEA;
 }
 
-.card-img__wrapper .card-img{
+.albums-gallery .card-img__wrapper .card-img{
   position: absolute;
   max-width: 100%;
   max-height: 100%;

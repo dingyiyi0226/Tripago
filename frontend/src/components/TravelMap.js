@@ -12,7 +12,7 @@ const instance = axios.create({
 })
 
 const getInfoWindowString = (album) => `
-  <div class="info-window">
+  <div class="travel-map__info-window">
     <p>${album.id}</p>
     <img src=${album.coverPhoto.url} alt="">
   </div>`;

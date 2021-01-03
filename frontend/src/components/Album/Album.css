@@ -5,25 +5,25 @@
 }
 
 /* Album Gallery */
-.card {
+.album-gallery .card {
   width: 100%;
   box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
 }
 
-.card:hover {
+.album-gallery .card:hover {
   box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
-.card:hover .card-img {
+.album-gallery .card:hover .card-img {
   opacity: 0.7;
 }
 
-.card:hover .cross {
+.album-gallery .card:hover .cross {
   cursor: pointer;
   opacity: 1;
 }
 
-.card .cross {
+.album-gallery .card .cross {
   width: 40px;
   height: 40px;
 
@@ -37,11 +37,11 @@
   opacity: 0;
 }
 
-.card .card-img {
+.album-gallery .card .card-img {
   background-color: #EAEAEA;
 }
 
-.card-footer {
+.album-gallery .card-footer {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
@@ -65,14 +65,14 @@
   background-color: #1a1a1a !important;
 }
 
-.fileContainer .uploadPictureContainer {
+.album-uploader .fileContainer .uploadPictureContainer {
   width: 15% !important;
   margin: 1% !important;
   background-color: white !important;
   box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05) !important;
 }
 
-.fileContainer .deleteImage {
+.album-uploader .fileContainer .deleteImage {
   color: transparent !important;
   background-color: white !important;
   background-image: url(./close-circle-outline.svg) !important;
@@ -88,11 +88,11 @@
   width: 90%;
 }
 
-.info-window img {
+.album-map__info-window img {
   width: 100pt;
 }
 
-.info-window p {
+.album-map__info-window p {
   font-size: 14px;
   margin-bottom: 0.25rem;
 }

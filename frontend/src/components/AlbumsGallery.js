@@ -42,7 +42,7 @@ class AlbumsGallery extends Component {
     else {
       return (
         <div className="p-4">
-          <Container>
+          <Container className="albums-gallery">
             <Row xs={1} sm={2} md={3} lg={4}>
               <Col className="p-3">
                 <Card as={NavLink} to={'/albumcreation'}>
