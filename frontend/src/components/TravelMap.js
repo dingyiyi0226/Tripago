@@ -1,48 +1,59 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import GoogleMap from 'google-map-react'
 
 import './component.css'
 
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
-const NTUSportsCenter = {lat: 25.0222, lng: 121.5354}
-const NTUCommon = {lat: 25.0160, lng: 121.5375}
 
-const PLACES = [
-  {name: 'NTUSportsCenter', 'location': NTUSportsCenter},
-  {name: 'NTUCommon', 'location': NTUCommon},
-]
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+const instance = axios.create({
+  baseURL: URL_ROOT
+})
 
-const getInfoWindowString = (place) => `
+const getInfoWindowString = (album) => `
   <div class="info-window">
-    <div class="place-name">
-      ${place.name}
-    </div>
+    <p>${album.id}</p>
+    <img src=${album.coverPhoto.url} alt="">
   </div>`;
 
 class TravelMap extends Component {
-
   constructor(props) {
     super(props)
-
     this.state = {
-      places: PLACES,
+      fetching: true,
+      albums: [],
+      mapCenter: NTULibrary
     }
   }
+
+  componentDidMount() {
+    const getAlbums = async () => {
+      const res = await instance.get('/albums')
+      console.log(res.data)
+      this.setState({
+        fetching: false,
+        albums: res.data
+      })
+    }
+    getAlbums()
+  }
   
-  renderGoogleApi = (map, maps, places) => {  // map is the map instance, maps is the maps API object
+  renderGoogleApi = (map, maps, albums) => {  // map is the map instance, maps is the maps API object
     const markers = [];
     const infowindows = [];
 
-    places.forEach((place) => {
+    albums.filter(album => album.coverPhoto && album.coverPhoto.location)
+          .forEach(album => {
       markers.push(new maps.Marker({
         position: {
-          lat: place.location.lat,
-          lng: place.location.lng,
+          lat: album.coverPhoto.location._latitude,
+          lng: album.coverPhoto.location._longitude,
         },
         map,
       }))
       infowindows.push(new maps.InfoWindow({
-        content: getInfoWindowString(place),
+        content: getInfoWindowString(album),
       }))
     })
 
@@ -53,24 +64,27 @@ class TravelMap extends Component {
     })
   }
 
-
   render () {
-    const { places } = this.state
-    return (
-      <div className="py-3 travel-map__container">
-        <h2>TravelMap</h2>
-        <div className="travel-map">
-          <GoogleMap
-            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-            defaultCenter={NTULibrary}
-            defaultZoom={15}
-            yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, places)}
-          >
-          </GoogleMap>
+    if(this.state.fetching) {
+      return <h3>Fetching Photos</h3>
+    }
+    else {
+      return (
+        <div className="py-3 travel-map__container">
+          <h2>TravelMap</h2>
+          <div className="travel-map">
+            <GoogleMap
+              bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
+              defaultCenter={this.state.mapCenter}
+              defaultZoom={5}
+              yesIWantToUseGoogleMapApiInternals
+              onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, this.state.albums)}
+            >
+            </GoogleMap>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 

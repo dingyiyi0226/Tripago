@@ -24,7 +24,7 @@ class AlbumMap extends Component {
     this.state = {
       fetching: true,
       photos: [],  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
-      defaultCenter: NTULibrary  // Set default center by album cover photo
+      mapCenter: NTULibrary  // Set default center by album cover photo
     }
   }
 
@@ -44,7 +44,7 @@ class AlbumMap extends Component {
         this.setState({
           fetching: false,
           photos: photos.data,
-          defaultCenter: {lat: coverPhoto.data.location._latitude, lng: coverPhoto.data.location._longitude}
+          mapCenter: {lat: coverPhoto.data.location._latitude, lng: coverPhoto.data.location._longitude}
         })
       }
 
@@ -89,7 +89,7 @@ class AlbumMap extends Component {
         <div className="album-map">
           <GoogleMap
             bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-            defaultCenter={this.state.defaultCenter}
+            defaultCenter={this.state.mapCenter}
             defaultZoom={10}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos)}

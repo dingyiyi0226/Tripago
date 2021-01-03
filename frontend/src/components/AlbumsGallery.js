@@ -25,7 +25,7 @@ class AlbumsGallery extends Component {
 
   componentDidMount(){
     const getAlbums = async () => {
-      const res = await instance.get('/albums', { params: {album: this.props.id}})
+      const res = await instance.get('/albums')
       console.log(res.data)
       this.setState({
         fetching: false,
@@ -47,9 +47,7 @@ class AlbumsGallery extends Component {
               <Col className="p-3">
                 <Card>
                   <Card.Img variant="top" src={ testpic } />
-                  <Card.Body>
-                    <Card.Title>Click to Add</Card.Title>
-                  </Card.Body>
+                  <Card.Footer>Click to Add</Card.Footer>
                 </Card>
               </Col>
               { this.state.albums.map(album =>
@@ -61,9 +59,7 @@ class AlbumsGallery extends Component {
                           <Card.Img variant="top" src={album.coverPhoto.url} />
                         )
                       }
-                      <Card.Body>
-                        <Card.Title>{`${album.id}`}</Card.Title>
-                      </Card.Body>
+                      <Card.Footer>{album.id}</Card.Footer>
                     </Card>
                   </Col>
                 )
