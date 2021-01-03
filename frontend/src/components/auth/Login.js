@@ -30,6 +30,7 @@ const LoginButton = (email, password) => {
 	};
 
 	const handleClick = async (e) => {
+		e.preventDefault();
 		const { status, message } = await login(email, password);
 		console.log('Received login status: ', status, message)
 		if (status) {

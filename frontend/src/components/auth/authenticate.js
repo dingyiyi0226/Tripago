@@ -28,7 +28,12 @@ const register = () => {
 };
 
 const logout = () => {
-
+	return true;
 };
 
-export { login, register, logout }
+const checkLoginStatus = () => {
+	console.log(this)
+	return true;
+};
+
+export { login, register, logout, checkLoginStatus }
