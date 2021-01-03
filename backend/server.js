@@ -47,6 +47,20 @@ app.get('/albums', async (req, res) => {
   res.status(200).send(albums)
 })
 
+app.post('/album-create', async (req, res) => {
+  const { albumName, albumDescription } = req.body
+  const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
+  try {
+    await albumRef.create({description: albumDescription})
+    console.log('album create successfully')
+    res.status(200).send()
+  }
+  catch {
+    console.log('album already exist')
+    res.status(404).send()
+  }
+})
+
 app.get('/album-photos', async (req, res) => {
   const { album } = req.query
 
