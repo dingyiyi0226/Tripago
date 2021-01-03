@@ -31,6 +31,10 @@
   opacity: 0;
 }
 
+.card .card-img {
+  background-color: #EAEAEA;
+}
+
 .card-footer {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

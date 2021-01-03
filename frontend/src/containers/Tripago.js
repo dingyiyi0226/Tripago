@@ -5,6 +5,7 @@ import Header from '../components/Header.js'
 import Home from '../components/Home.js'
 import Albums from '../components/Albums.js'
 import Album from '../components/Album'
+import AlbumCreation from '../components/AlbumCreation.js'
 import Login from '../components/auth/Login'
 import Registration from '../components/auth/Registration'
 import LoginContext from '../LoginContext.js'
@@ -44,6 +45,9 @@ const Tripago = () => {
         </Route>
         <Route path="/albums/:id">
           <Album />
+        </Route>
+        <Route path="/albumcreation">
+          <AlbumCreation />
         </Route>
         <Route path="/login">
           <Login />
