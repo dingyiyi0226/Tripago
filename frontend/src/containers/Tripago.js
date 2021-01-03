@@ -10,8 +10,8 @@ import Registration from '../components/auth/Registration'
 import LoginContext from '../LoginContext.js'
 
 const Tripago = () => {
-  const {isLogin, setIsLogin} = useContext(LoginContext);
-  if (!isLogin) {
+  const {loginStatus, setloginStatus} = useContext(LoginContext);
+  if (!loginStatus.isLogin) {
     return (
       <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Header />

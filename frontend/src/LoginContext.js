@@ -1,13 +1,11 @@
 import React from 'react';
 
-const ADMIN_USERID = 'abcde' 
-
 const LoginContext = React.createContext({
-	data: {
+	loginStatus: {
 		isLogin: false,
-		userID: ADMIN_USERID
+		userID: ''
 	},
-	setIsLogin: () => {}
+	setLoginStatus: () => {}
 });
 
 export default LoginContext;

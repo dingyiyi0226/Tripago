@@ -2,12 +2,18 @@ import axios from 'axios'
 
 const test_login_response = {
 	success: {
-		status: true,
+		status: {
+			isLogin: true,
+			userID: '123'
+		},
 		message: 'login success'
 	},
 	fail: {
-		status: false,
-		message: 'wrong user or password'
+		status: {
+			isLogin: false,
+			userID: ''
+		},
+		message: 'Wrong username or password'
 	}
 }
 
@@ -32,8 +38,8 @@ const logout = () => {
 };
 
 const checkLoginStatus = () => {
-	console.log(this)
-	return true;
+	// console.log(this)
+	return test_login_response.fail;
 };
 
 export { login, register, logout, checkLoginStatus }

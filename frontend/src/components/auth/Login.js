@@ -19,11 +19,11 @@ class LoginAlert extends Component {
 }
 
 const LoginButton = (email, password) => {
-	const {isLogin, setIsLogin} = useContext(LoginContext);
+	const {loginStatus, setLoginStatus} = useContext(LoginContext);
 	const [errorMessage, setErrorMessage] = useState("");
-
+	console.log('loginStatus: ', loginStatus)
 	const renderRedirect = () => {
-		if(isLogin) {
+		if(loginStatus.isLogin) {
 			console.log('redirect rendered')
 			return <Redirect to='/home'/>;
 		}
@@ -33,14 +33,14 @@ const LoginButton = (email, password) => {
 		e.preventDefault();
 		const { status, message } = await login(email, password);
 		console.log('Received login status: ', status, message)
-		if (status) {
-			setIsLogin(true);
+		if (status.isLogin) {
+			setLoginStatus(status);
 		} else {
 			setErrorMessage(message);
 			console.log(message)
-			setIsLogin(false);
+			setLoginStatus(status);
 		}
-		console.log('Is login after clicking: ', isLogin)
+		console.log('Is login after clicking: ', loginStatus)
 	};
 
 	return (

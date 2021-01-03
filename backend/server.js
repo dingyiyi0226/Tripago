@@ -15,7 +15,11 @@ const cloudStorage = new Storage()
 const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 const firestore = new Firestore();
 
-const USER = 'ethia_polis'
+//Some tmp data
+const USER = 'ethia_polis';
+const userID = '12345';
+let users = [] // [{userID: String, password: String, email: String, userName: String}]
+
 
 const upload = multer({storage: storage})
 const MAX_FILE = 12

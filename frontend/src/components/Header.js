@@ -6,10 +6,10 @@ import LoginContext from '../LoginContext.js'
 import { logout } from './auth/authenticate'
 
 const UserButtons = () => {
-  const {isLogin, setIsLogin} = useContext(LoginContext);
+  const {loginStatus, setLoginStatus} = useContext(LoginContext);
   // console.log(isLogin, setIsLogin)
 
-  if (!isLogin) {
+  if (!loginStatus.isLogin) {
     return (
        <Nav className="justify-content-end">
         <Nav.Item>
@@ -27,7 +27,7 @@ const UserButtons = () => {
       onClick={() => {
         console.log('logout clicked')
         logout();
-        setIsLogin(false);
+        setLoginStatus({isLogin: false, userID: ''});
     }}>
       <Nav.Link as={NavLink} to="/login">
         Log out

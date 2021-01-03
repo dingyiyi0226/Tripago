@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { register } from './authenticate'
@@ -31,28 +31,46 @@ class RegistrationAlert extends Component {
 	}
 }
 
-const LoginButton = (email, password) => {
+
+const RegistrationButton = (email, password) => {
 	const {isLogin, setIsLogin} = useContext(LoginContext);
+	const [errorMessage, setErrorMessage] = useState("");
+
 	const renderRedirect = () => {
 		if(isLogin) {
+			console.log('redirect rendered')
 			return <Redirect to='/home'/>;
 		}
 	};
+
+	const handleClick = async (e) => {
+		e.preventDefault();
+		const { status, message } = await register(email, password);
+		console.log('Received registration response: ', status, message)
+		if (status) {
+			setIsLogin(true);
+		} else {
+			setErrorMessage(message);
+			console.log(message)
+			setIsLogin(false);
+		}
+		console.log('Is login after clicking: ', isLogin)
+	};
+
 	return (
 		<div>
 			<Button 
 				variant="primary" 
 				type="submit" 
-				onClick={(e) => {
-					const tmp = register(email, password);
-					if (tmp) {
-						setIsLogin(true);
-					}
-				}}
+				onClick={handleClick}
 			>
 			Login
 			</Button>
 			{renderRedirect()}
+			<br/>
+			<div style={{"width": "80%", "margin":"auto"}}>
+				<RegistrationAlert errorMessage={errorMessage}/>
+			</div>
 		</div>
 	);
 };

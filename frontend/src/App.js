@@ -8,15 +8,15 @@ import LoginContext from './LoginContext.js';
 import { checkLoginStatus } from './components/auth/authenticate'
 
 function App() {
-	const [loginStatus, setloginStatus] = useState({
+	const [loginStatus, setLoginStatus] = useState({
 		isLogin: false,
 		userID: undefined
 	});
-	const value = { loginStatus, setloginStatus };
+	const value = { loginStatus, setLoginStatus };
 
 	useEffect(() => {
 		const new_loginStatus = checkLoginStatus();
-		setloginStatus(new_loginStatus);
+		setLoginStatus(new_loginStatus);
 	}, []);
 
   return (
