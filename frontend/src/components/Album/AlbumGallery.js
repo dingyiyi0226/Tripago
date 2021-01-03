@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { Button, Card, Container, Row, Col } from 'react-bootstrap'
 
 import './Album.css'
-import crossImg from './close-circle-outline.png'
+import crossImg from './close-circle-outline.svg'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 
