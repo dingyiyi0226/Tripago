@@ -1,4 +1,4 @@
-import React, { Component, useContext } from 'react'  //import useContext preparing for auto-redirection to login page
+import React, { useContext } from 'react'  //import useContext preparing for auto-redirection to login page
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 import Header from '../components/Header.js'

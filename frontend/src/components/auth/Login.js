@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import { login } from './authenticate'
+import LoginContext from '../../LoginContext.js'
+
 
 class LoginAlert extends Component {
 	render() {
@@ -15,17 +18,56 @@ class LoginAlert extends Component {
 	}
 }
 
+const LoginButton = (email, password) => {
+	const {isLogin, setIsLogin} = useContext(LoginContext);
+	const [errorMessage, setErrorMessage] = useState("");
+
+	const renderRedirect = () => {
+		if(isLogin) {
+			console.log('redirect rendered')
+			return <Redirect to='/home'/>;
+		}
+	};
+
+	const handleClick = async (e) => {
+		const { status, message } = await login(email, password);
+		console.log('Received login status: ', status, message)
+		if (status) {
+			setIsLogin(true);
+		} else {
+			setErrorMessage(message);
+			console.log(message)
+			setIsLogin(false);
+		}
+		console.log('Is login after clicking: ', isLogin)
+	};
+
+	return (
+		<div>
+			<Button 
+				variant="primary" 
+				type="submit" 
+				onClick={handleClick}
+			>
+			Login
+			</Button>
+			{renderRedirect()}
+			<br/>
+			<div style={{"width": "80%", "margin":"auto"}}>
+				<LoginAlert errorMessage={errorMessage}/>
+			</div>
+		</div>
+	);
+};
+
 class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			email: "",
 			password: "",
-			errorMessage: "",
-			redirect: false
 		};
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange = (event => {
@@ -33,19 +75,6 @@ class Login extends Component {
 		this.setState({
 			[name]: value
 		});
-	});
-
-	handleSubmit = (event => {
-		event.preventDefault();
-		// if successfully login
-		// TODOs
-		this.setState({redirect: true});
-	});
-
-	renderRedirect = (() => {
-		if (this.state.redirect) {
-			return <Redirect to='/home'/>;
-		} 
 	});
 
 	render() {
@@ -71,16 +100,8 @@ class Login extends Component {
 				    value={this.state.password}
 				    onChange={this.handleChange} />
 				  </Form.Group>
-				  {this.renderRedirect()}
-				  <Button 
-				  	variant="primary" type="submit" onClick={this.handleSubmit}>
-				    Login
-				  </Button>
+				  <LoginButton email={this.state.email} password={this.state.password}/>
 				</Form>
-				<br/>
-				<div style={{"width": "60%", "margin":"auto"}}>
-					<LoginAlert errorMessage={this.state.errorMessage}/>
-				</div>
 			</div>);
 	}
 }
