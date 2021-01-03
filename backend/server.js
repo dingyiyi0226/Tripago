@@ -51,6 +51,20 @@ app.get('/albums', async (req, res) => {
   res.status(200).send(albums)
 })
 
+app.post('/album-create', async (req, res) => {
+  const { albumName, albumDescription } = req.body
+  const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
+  try {
+    await albumRef.create({description: albumDescription})
+    console.log('album create successfully')
+    res.status(200).send()
+  }
+  catch {
+    console.log('album already exist')
+    res.status(404).send()
+  }
+})
+
 app.get('/album-photos', async (req, res) => {
   const { album } = req.query
 
@@ -68,6 +82,18 @@ app.get('/album-coverphoto', async (req, res) => {
 
   if (coverPhotoSnapshot.data() && coverPhotoSnapshot.data().coverPhoto) {
     res.status(200).send(coverPhotoSnapshot.data().coverPhoto)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+
+app.get('/album-description', async (req, res) => {
+  const { album } = req.query
+  const albumSnapshot = await firestore.doc(`users/${USER}/albums/${album}`).get()
+
+  if (albumSnapshot.data() && albumSnapshot.data().description) {
+    res.status(200).send(albumSnapshot.data().description)
   }
   else {
     res.status(200).send()

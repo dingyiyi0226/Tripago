@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { Button, Card, Container, Row, Col } from 'react-bootstrap'
 
 import './Album.css'
-import crossImg from './close-circle-outline.png'
+import crossImg from './close-circle-outline.svg'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 
@@ -48,7 +48,7 @@ class AlbumGallery extends Component {
     }
     else {
       return (
-        <Container>
+        <Container className="album-gallery">
           <Row xs={1} sm={2} md={3} lg={4}>
             { this.state.photos.map(photo =>
                 <Col className="p-3" key={photo.id}>

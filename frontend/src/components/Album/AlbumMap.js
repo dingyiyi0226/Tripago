@@ -13,7 +13,7 @@ const instance = axios.create({
 const NTULibrary = {lat: 25.0174, lng: 121.5405}
 
 const getInfoWindowString = (photo) => `
-  <div class="info-window">
+  <div class="album-map__info-window">
     <p>${photo.id}</p>
     <img src=${photo.url} alt="">
   </div>`;
