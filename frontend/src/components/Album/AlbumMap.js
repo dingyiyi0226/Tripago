@@ -94,7 +94,7 @@ class AlbumMap extends Component {
         infowindows[i].open(map, marker);
       })
     })
-    if (centerPhotoIndex){
+    if (centerPhotoIndex !== undefined ){
       infowindows[centerPhotoIndex].open(map, markers[centerPhotoIndex]);
     }
   }
