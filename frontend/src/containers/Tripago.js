@@ -9,6 +9,7 @@ import AlbumCreation from '../components/AlbumCreation.js'
 import Login from '../components/auth/Login'
 import Registration from '../components/auth/Registration'
 import LoginContext from '../LoginContext.js'
+import Platform from '../components/Platform'
 
 const Tripago = () => {
   const {loginStatus, setloginStatus} = useContext(LoginContext);
@@ -54,6 +55,9 @@ const Tripago = () => {
         </Route>
         <Route path="/register">
           <Registration />
+        </Route>
+        <Route path="/platform">
+          <Platform />
         </Route>
       </Switch>
     </BrowserRouter>

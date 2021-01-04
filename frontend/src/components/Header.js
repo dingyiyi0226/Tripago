@@ -11,7 +11,7 @@ const UserButtons = () => {
 
   if (!loginStatus.isLogin) {
     return (
-       <Nav className="justify-content-end">
+      <Nav className="justify-content-end">
         <Nav.Item>
           <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
         </Nav.Item>
@@ -19,21 +19,21 @@ const UserButtons = () => {
           <Nav.Link as={NavLink} to="/login">Log in</Nav.Link>
         </Nav.Item>
       </Nav>
-      );
+    );
   }
   return (
-   <Nav className="justify-content-end">
-    <Nav.Item 
-      onClick={() => {
-        console.log('logout clicked')
-        logout();
-        setLoginStatus({isLogin: false, userID: ''});
-    }}>
-      <Nav.Link as={NavLink} to="/login">
-        Log out
-      </Nav.Link>
-    </Nav.Item>
-  </Nav>
+    <Nav className="justify-content-end">
+      <Nav.Item
+        onClick={() => {
+          console.log('logout clicked')
+          logout();
+          setLoginStatus({isLogin: false, userID: ''});
+      }}>
+        <Nav.Link as={NavLink} to="/login">
+          Log out
+        </Nav.Link>
+      </Nav.Item>
+    </Nav>
   );
 };
 
@@ -48,6 +48,9 @@ class Header extends Component {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link as={NavLink} to="/albums">Albums</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link as={NavLink} to="/platform">Platform</Nav.Link>
           </Nav.Item>
         </Nav>
         <UserButtons />
