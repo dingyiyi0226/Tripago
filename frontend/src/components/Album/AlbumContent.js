@@ -26,8 +26,8 @@ class Content extends Component {
           <Route path={`/albums/${id}/upload`}>
             <AlbumUploader id={id}/>
           </Route>
-          <Route path={`/albums/${id}/map`}>
-            <AlbumMap id={id}/>
+          <Route path={`/albums/${id}/map`}
+                 render={ ({ location }) => (<AlbumMap id={id} location={location}/>)}>
           </Route>
         </Switch>
       </div>

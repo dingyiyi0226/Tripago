@@ -24,41 +24,55 @@ class AlbumMap extends Component {
     this.state = {
       fetching: true,
       photos: [],  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
-      mapCenter: NTULibrary  // Set default center by album cover photo
+      centerPhoto: undefined
     }
   }
 
   componentDidMount() {
+    const centerPhotoId = this.props.location.hash.slice(1)
+
     const getAlbum = async () => {
       const photos = await instance.get('/album-photos', { params: {album: this.props.id}})
 
-      const coverPhoto = await instance.get('album-coverphoto', { params: {album: this.props.id}})
-
-      if (!coverPhoto.data || !coverPhoto.data.location) {
+      if (centerPhotoId){
+        const centerPhoto = photos.data.find(photo => photo.id === centerPhotoId)
         this.setState({
           fetching: false,
           photos: photos.data,
+          centerPhoto: centerPhoto
         })
       }
       else {
-        this.setState({
-          fetching: false,
-          photos: photos.data,
-          mapCenter: {lat: coverPhoto.data.location._latitude, lng: coverPhoto.data.location._longitude}
-        })
-      }
+        const coverPhoto = await instance.get('album-coverphoto', { params: {album: this.props.id}})
+        if (!coverPhoto.data || !coverPhoto.data.location) {
+          this.setState({
+            fetching: false,
+            photos: photos.data,
+          })
+        }
+        else {
+          this.setState({
+            fetching: false,
+            photos: photos.data,
+            centerPhoto: coverPhoto.data
+          })
+        }
 
+      }
     }
     getAlbum()
   }
 
-  renderGoogleApi = (map, maps, photos) => {  // map is the map instance, maps is the maps API object
+  renderGoogleApi = (map, maps, photos, centerPhoto) => {  // map is the map instance, maps is the maps API object
     const markers = [];
     const infowindows = [];
+    let centerPhotoIndex = undefined;
 
     photos.filter( photo => photo.location)
-          .forEach( photo => {
-      console.log(photo.id)
+          .forEach( (photo, index) => {
+      if ( photo.id === centerPhoto.id) {
+        centerPhotoIndex = index
+      }
       markers.push(new maps.Marker({
         position: {
           lat: photo.location._latitude,
@@ -76,10 +90,19 @@ class AlbumMap extends Component {
         infowindows[i].open(map, marker);
       })
     })
+    if (centerPhotoIndex){
+      infowindows[centerPhotoIndex].open(map, markers[centerPhotoIndex]);
+    }
   }
 
   render () {
-    const { photos } = this.state
+    const { photos, centerPhoto } = this.state
+    console.log('centerphoto', centerPhoto)
+    const centerLoc = (!centerPhoto || !centerPhoto.location) ? (
+                        NTULibrary
+                      ) : (
+                        { lat: centerPhoto.location._latitude, lng: centerPhoto.location._longitude }
+                      )
 
     if(this.state.fetching) {
       return <h3>Fetching Photo Locations</h3>
@@ -89,10 +112,10 @@ class AlbumMap extends Component {
         <div className="album-map">
           <GoogleMap
             bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-            defaultCenter={this.state.mapCenter}
+            defaultCenter={centerLoc}
             defaultZoom={10}
             yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos)}
+            onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos, centerPhoto)}
           >
           </GoogleMap>
         </div>

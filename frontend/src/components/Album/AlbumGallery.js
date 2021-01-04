@@ -60,7 +60,10 @@ class AlbumGallery extends Component {
                           NO LOCATION INFO
                         </Card.Footer>
                       ) : (
-                        <Card.Footer as={NavLink} to={`/albums/${this.props.id}/map`}>
+                        <Card.Footer as={NavLink} to={{
+                          pathname: `/albums/${this.props.id}/map`,
+                          hash: `#${photo.id}`
+                        }}>
                           SHOW ON MAP
                         </Card.Footer>
                       )
