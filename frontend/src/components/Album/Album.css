@@ -80,16 +80,18 @@
 .album-map {
   margin: auto;
   padding-top: 20px;
-  
   height: 60%;
   width: 90%;
+  text-align: left;
 }
 
 .album-map__info-window img {
   width: 100pt;
+  text-align: center;
 }
 
 .album-map__info-window p {
   font-size: 14px;
   margin-bottom: 0.25rem;
+  text-align: center;
 }

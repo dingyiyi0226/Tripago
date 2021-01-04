@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import MarkerClusterer from '@googlemaps/markerclustererplus'
 import GoogleMap from 'google-map-react'
 
 import './component.css'
@@ -56,7 +57,8 @@ class TravelMap extends Component {
         content: getInfoWindowString(album),
       }))
     })
-
+    const markerCluster = new MarkerClusterer(map, markers, { imagePath: `${process.env.PUBLIC_URL}/images/m` });
+    
     markers.forEach((marker, i) => {
       marker.addListener('click', () => {
         infowindows[i].open(map, marker);

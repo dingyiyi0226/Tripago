@@ -12,18 +12,20 @@
 .travel-map {
   margin: auto;
   padding-top: 10px;
-  
   height: 60%;
   width: 90%;
+  text-align: left;
 }
 
 .travel-map__info-window img {
   width: 100pt;
+  text-align: center;
 }
 
 .travel-map__info-window p {
   font-size: 14px;
   margin-bottom: 0.25rem;
+  text-align: center;
 }
 
 /* Albums Gallery */

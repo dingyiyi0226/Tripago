@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import MarkerClusterer from '@googlemaps/markerclustererplus'
 import GoogleMap from 'google-map-react'
 
 import './Album.css'
@@ -24,7 +25,8 @@ class AlbumMap extends Component {
     this.state = {
       fetching: true,
       photos: [],  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
-      centerPhoto: undefined
+      centerPhoto: undefined,
+      defaultZoom: 10
     }
   }
 
@@ -39,7 +41,8 @@ class AlbumMap extends Component {
         this.setState({
           fetching: false,
           photos: photos.data,
-          centerPhoto: centerPhoto
+          centerPhoto: centerPhoto,
+          defaultZoom: 14
         })
       }
       else {
@@ -84,6 +87,7 @@ class AlbumMap extends Component {
         content: getInfoWindowString(photo),
       }))
     })
+    const markerCluster = new MarkerClusterer(map, markers, { imagePath: `${process.env.PUBLIC_URL}/images/m` });
 
     markers.forEach((marker, i) => {
       marker.addListener('click', () => {
@@ -96,7 +100,7 @@ class AlbumMap extends Component {
   }
 
   render () {
-    const { photos, centerPhoto } = this.state
+    const { photos, centerPhoto, defaultZoom } = this.state
     console.log('centerphoto', centerPhoto)
     const centerLoc = (!centerPhoto || !centerPhoto.location) ? (
                         NTULibrary
@@ -113,7 +117,7 @@ class AlbumMap extends Component {
           <GoogleMap
             bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
             defaultCenter={centerLoc}
-            defaultZoom={10}
+            defaultZoom={defaultZoom}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos, centerPhoto)}
           >
