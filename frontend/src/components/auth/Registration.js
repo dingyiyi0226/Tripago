@@ -1,7 +1,7 @@
 import React, { Component, useContext, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import { register } from './authenticate'
+import { register, login } from './authenticate'
 import LoginContext from '../../LoginContext.js'
 
 
@@ -33,11 +33,11 @@ class RegistrationAlert extends Component {
 
 
 const RegistrationButton = (email, password) => {
-	const {isLogin, setIsLogin} = useContext(LoginContext);
+	const {loginStatus, setLoginStatus} = useContext(LoginContext);
 	const [errorMessage, setErrorMessage] = useState("");
 
 	const renderRedirect = () => {
-		if(isLogin) {
+		if(loginStatus.isLogin) {
 			console.log('redirect rendered')
 			return <Redirect to='/home'/>;
 		}
@@ -47,14 +47,14 @@ const RegistrationButton = (email, password) => {
 		e.preventDefault();
 		const { status, message } = await register(email, password);
 		console.log('Received registration response: ', status, message)
-		if (status) {
-			setIsLogin(true);
+		if (status.isLogin) {
+			setLoginStatus(status);
 		} else {
 			setErrorMessage(message);
 			console.log(message)
-			setIsLogin(false);
+			setLoginStatus({isLogin: false, user: ''});
 		}
-		console.log('Is login after clicking: ', isLogin)
+		console.log('Is login after clicking: ', loginStatus.isLogin)
 	};
 
 	return (
@@ -64,7 +64,7 @@ const RegistrationButton = (email, password) => {
 				type="submit" 
 				onClick={handleClick}
 			>
-			Login
+			Register
 			</Button>
 			{renderRedirect()}
 			<br/>
@@ -88,7 +88,6 @@ class Registration extends Component {
 			redirect: false
 		};
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange = (event => {
@@ -98,19 +97,6 @@ class Registration extends Component {
 			[name + "Changed"]: true
 		});
 		// console.log(this.state)
-	});
-
-	handleSubmit = (event => {
-		event.preventDefault();
-		// if successfully register
-		// TODOs
-		this.setState({redirect: true});
-	});
-
-	renderRedirect = (() => {
-		if (this.state.redirect) {
-			return <Redirect to='/home'/>;
-		} 
 	});
 
 	render() {
@@ -149,15 +135,8 @@ class Registration extends Component {
 				  <div style={{"width": "80%", "margin":"auto"}}>
 					  <UnmatchedPwdAlert data={this.state}/>
 				  </div>
-				  {this.renderRedirect()}
-				  <Button variant="primary" type="submit" onClick={this.handleSubmit}>
-				    Register
-				  </Button>
+				  <RegistrationButton />
 				</Form>
-				<br/>
-				<div style={{"width": "60%", "margin":"auto"}}>
-					<RegistrationAlert errorMessage={this.state.errorMessage}/>
-				</div>
 			</div>);
 	}
 }

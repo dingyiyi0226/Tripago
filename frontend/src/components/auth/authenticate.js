@@ -17,6 +17,14 @@ const test_login_response = {
 	}
 }
 
+const register_error_response = {
+	status: {
+		isLogin: false,
+		userID: ''
+	},
+	message: 'Register failed'
+}
+
 const delay = (s) => {
   return new Promise(resolve => {
     setTimeout(resolve,s); 
@@ -29,8 +37,16 @@ const login = async (user) => {
 	return test_login_response.success
 };
 
-const register = () => {
-	return true;
+const register = (user) => {
+	const { email, password } = user;
+	// do something for register
+	let registerSuccess = false;
+	if (registerSuccess) {
+		return login(user)
+	} else {
+		return register_error_response
+	}
+
 };
 
 const logout = () => {
