@@ -1,28 +1,42 @@
 import cors from 'cors'
 import express from 'express'
+import session from 'express-session'
 import multer from 'multer'
 import { Storage } from '@google-cloud/storage'
 import { Firestore } from '@google-cloud/firestore'
-
+import { FirestoreStore } from '@google-cloud/connect-firestore'
 import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
 
-const app = express()
-app.use(cors())
-app.use(express.json())
 
-const storage = multer.memoryStorage()
-const cloudStorage = new Storage()
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(
+  session({
+    store: new FirestoreStore({
+      dataset: new Firestore(),
+      kind: 'express-sessions',
+    }),
+    secret: 'su35/3wu0 m, cjo4',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+const storage = multer.memoryStorage();
+const cloudStorage = new Storage();
 const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 const firestore = new Firestore();
 
 //Some tmp data
 const USER = 'ethia_polis';
 const userID = '12345';
-let users = [] // [{userID: String, password: String, email: String, userName: String}]
+let users = []; // [{userID: String, password: String, email: String, userName: String}]
 
 
-const upload = multer({storage: storage})
-const MAX_FILE = 12
+const upload = multer({storage: storage});
+const MAX_FILE = 12;
 
 /**
   DB Schema (temp version)
