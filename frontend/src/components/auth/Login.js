@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom';
 import { login } from './authenticate'
 import LoginContext from '../../LoginContext.js'
 
-
 class LoginAlert extends Component {
 	render() {
 		if (this.props.errorMessage) {
@@ -21,7 +20,6 @@ class LoginAlert extends Component {
 const LoginButton = (email, password) => {
 	const {loginStatus, setLoginStatus} = useContext(LoginContext);
 	const [errorMessage, setErrorMessage] = useState("");
-	console.log('loginStatus: ', loginStatus)
 	const renderRedirect = () => {
 		if(loginStatus.isLogin) {
 			console.log('redirect rendered')
@@ -31,7 +29,8 @@ const LoginButton = (email, password) => {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		const { status, message } = await login(email, password);
+		const res = await login(email, password);
+		const { status, message } = res.data;
 		console.log('Received login status: ', status, message)
 		if (status.isLogin) {
 			setLoginStatus(status);

@@ -1,5 +1,12 @@
 import axios from 'axios'
 
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+
+const instance = axios.create({
+  baseURL: URL_ROOT,
+  withCredentials: true
+})
+
 const test_login_response = {
 	success: {
 		status: {
@@ -33,11 +40,13 @@ const delay = (s) => {
 
 const login = async (user) => {
 	const { email, password } = user;
-	await delay(500);
-	return test_login_response.success
+	// await delay(500);
+	const res = await instance.post('./login', user)
+	console.log('server response:',res)
+	return res
 };
 
-const register = (user) => {
+const register = async (user) => {
 	const { email, password } = user;
 	// do something for register
 	let registerSuccess = false;
