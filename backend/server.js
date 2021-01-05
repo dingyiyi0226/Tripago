@@ -1,28 +1,49 @@
 import cors from 'cors'
 import express from 'express'
+import session from 'express-session'
 import multer from 'multer'
 import { Storage } from '@google-cloud/storage'
 import { Firestore } from '@google-cloud/firestore'
-
+import { FirestoreStore } from '@google-cloud/connect-firestore'
 import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
 
-const app = express()
-app.use(cors())
-app.use(express.json())
 
-const storage = multer.memoryStorage()
-const cloudStorage = new Storage()
+
+const app = express();
+app.use(cors({
+  credentials: true,  origin: 'http://localhost:3000'
+}));
+app.use(express.json());
+app.use(
+  session({
+    store: new FirestoreStore({
+      dataset: new Firestore(),
+      kind: 'express-sessions',
+    }),
+    secret: 'su35/3wu0 m, cjo4',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+const storage = multer.memoryStorage();
+const cloudStorage = new Storage();
 const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 const firestore = new Firestore();
 
 //Some tmp data
 const USER = 'ethia_polis';
 const userID = '12345';
-let users = [] // [{userID: String, password: String, email: String, userName: String}]
+let users = [
+  {userID: 1, userName: 'Alice', email: 'alice@gmail.com', password: 'qwerty'},
+  {userID: 2, userName: 'Bob', email: 'bob@gmail.com', password: 'qwerty'},
+  {userID: 3, userName: 'Nebuchadnezzar', email: 'nebuchadnezzar@gmail.com', password: 'qwerty'},
+  {userID: 4, userName: '', email: '', password: ''}
+];
 
 
-const upload = multer({storage: storage})
-const MAX_FILE = 12
+const upload = multer({storage: storage});
+const MAX_FILE = 12;
 
 /**
   DB Schema (temp version)
@@ -133,6 +154,38 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   await updateAlbumCoverPhoto(USER, album)
   res.status(200).send();
 })
+
+// testing
+app.post('/login', (req, res) => {
+  console.log('login called')
+  const { email, password } = req.body;
+  const user = users.find((user) => {
+    return user.email === email && user.password === password;
+  });
+  console.log(user?user:'user not found')
+  const { userID } = req.session;
+
+  if(user) {
+    req.session.userID = user.userID;
+    res.send({
+    status: {
+      isLogin: true,
+      userID: user.userID
+    },
+    message: 'login success'
+  })
+  } else {
+    res.send({
+      status: {
+        isLogin: false,
+        userID: ''
+      },
+      message: 'Wrong username or password'
+    });
+  } 
+  console.log(req.session)
+});
+
 
 // Debug function
 app.get('/', (req, res) => {
