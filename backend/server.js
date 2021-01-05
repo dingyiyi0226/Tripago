@@ -10,7 +10,9 @@ import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
 
 
 const app = express();
-app.use(cors({credentials: true,  origin: 'http://localhost:3000'}));
+app.use(cors({
+  credentials: true,  origin: 'http://localhost:3000'
+}));
 app.use(express.json());
 app.use(
   session({
@@ -35,7 +37,7 @@ const userID = '12345';
 let users = [
   {userID: 1, userName: 'Alice', email: 'alice@gmail.com', password: 'qwerty'},
   {userID: 2, userName: 'Bob', email: 'bob@gmail.com', password: 'qwerty'},
-  {userID: 3, userName: 'Nebuchadnezzar', email: 'nebuchadnezzar@gmail.com', password: 'qwerty'}
+  {userID: 3, userName: 'Nebuchadnezzar', email: 'nebuchadnezzar@gmail.com', password: 'qwerty'},
   {userID: 4, userName: '', email: '', password: ''}
 ];
 
