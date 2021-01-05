@@ -37,7 +37,7 @@ class AlbumsGallery extends Component {
 
   render () {
     if(this.state.fetching) {
-      return <h3>Fetching Photos</h3>
+      return <h3 className="fetching-text">Fetching Photos</h3>
     }
     else {
       return (
