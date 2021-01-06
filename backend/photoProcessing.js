@@ -1,5 +1,6 @@
 import { Storage } from '@google-cloud/storage'
 import { Firestore } from '@google-cloud/firestore'
+import { Client } from '@googlemaps/google-maps-services-js'
 import exifr from 'exifr'
 
 const cloudStorage = new Storage()
@@ -11,6 +12,7 @@ async function photoProcessing(file, user, album) {
 
   let photoUrl = ''
   let photoLoc = {}
+  let photoAddr = []
   let noLoc = true
 
   const parsePhoto = async () => {
@@ -18,6 +20,24 @@ async function photoProcessing(file, user, album) {
     if(loc) {
       photoLoc = {lat: loc.latitude, lng: loc.longitude}
       noLoc = false
+
+      const client = new Client({})
+      const res = await client.reverseGeocode({
+        params: {
+          key: process.env.GOOGLE_API_KEY,
+          language: 'en',
+          latlng: photoLoc,
+          result_type: ['administrative_area_level_1'] // Level of City
+        }
+      })
+      if (res.data.status==="OK") {
+        const addressComponents = res.data.results[0].address_components  // first result is the most explicit one
+        photoAddr = addressComponents.map( component => component.long_name)
+        console.log(photoAddr)
+      }
+      else {
+        console.log('bad geocoding')
+      }
     }
     else {
       console.log('no location')
@@ -53,7 +73,8 @@ async function photoProcessing(file, user, album) {
     else {
       let res = await photoDoc.set({
         url: photoUrl,
-        location: new Firestore.GeoPoint(photoLoc.lat, photoLoc.lng)
+        location: new Firestore.GeoPoint(photoLoc.lat, photoLoc.lng),
+        address: photoAddr
       })
     }
   }

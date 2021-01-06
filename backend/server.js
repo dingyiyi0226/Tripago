@@ -53,11 +53,12 @@ const MAX_FILE = 12;
       albums/
       - album1:
           description: String
-          coverPhoto: {url: String, location: GeoPoint}
+          coverPhoto: {url: String, location: GeoPoint, address: [String]}
           photos/
           - photo1:
               url: String
               location: GeoPoint
+              address: [String]
           - photo2:
       - album2:
   - user2
