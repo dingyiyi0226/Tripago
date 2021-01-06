@@ -1,4 +1,0 @@
-runtime: nodejs14
-
-env_variables:
-  GCLOUD_STORAGE_BUCKET: our-tripago-photo-bucket
