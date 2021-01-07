@@ -32,7 +32,7 @@ async function photoProcessing(file, user, album) {
       })
       if (res.data.status==="OK") {
         const addressComponents = res.data.results[0].address_components  // first result is the most explicit one
-        photoAddr = addressComponents.map( component => component.long_name)
+        photoAddr = addressComponents.map( component => component.long_name.toLowerCase())
         console.log(photoAddr)
       }
       else {

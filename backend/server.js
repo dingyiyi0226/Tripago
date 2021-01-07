@@ -3,7 +3,7 @@ import express from 'express'
 import session from 'express-session'
 import multer from 'multer'
 import { Storage } from '@google-cloud/storage'
-import { Firestore } from '@google-cloud/firestore'
+import { Firestore, FieldPath } from '@google-cloud/firestore'
 import { FirestoreStore } from '@google-cloud/connect-firestore'
 import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
 
@@ -34,6 +34,7 @@ const firestore = new Firestore();
 
 //Some tmp data
 const USER = 'ethia_polis';
+// const USER = 'PKdropthebeat';
 const userID = '12345';
 let users = [
   {userID: 1, userName: 'Alice', email: 'alice@gmail.com', password: 'qwerty'},
@@ -155,6 +156,46 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   }
   await updateAlbumCoverPhoto(USER, album)
   res.status(200).send();
+})
+
+app.get('/platform', async (req, res) => {
+  let { region } = await req.query
+  if (region){
+    region = region.toLowerCase()
+  }
+  console.log(region)
+
+  let users = []
+  let validAlbums = []
+
+  const usersSnapshot = await firestore.collection('users').get()
+  usersSnapshot.forEach( user => {
+    users.push(user.id)
+  })
+
+  if (region) {
+    const regionPath = new FieldPath('coverPhoto', 'address')
+    for (let user of users) {
+      const albumsSnapshot = await firestore.collection(`users/${user}/albums`)
+                                     .where( regionPath, 'array-contains', region).get()
+      albumsSnapshot.forEach( album => {
+        validAlbums.push({user: user, albumName: album.id})
+      })
+    }
+  }
+  else {
+    const regionPath = new FieldPath('coverPhoto', 'address')
+    for (let user of users) {
+      const albumsSnapshot = await firestore.collection(`users/${user}/albums`).get()
+      albumsSnapshot.forEach( album => {
+        validAlbums.push({user: user, albumName: album.id})
+      })
+    }
+  }
+
+  console.log(validAlbums)
+
+  res.status(200).send(validAlbums)
 })
 
 // testing

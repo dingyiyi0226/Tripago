@@ -10,7 +10,7 @@ class PlatformSidebar extends Component {
     super(props)
     this.state = {
       region: '',
-      options: ['Taiwan', 'Japan', 'Tainan', 'Taichung']
+      options: ['Taiwan', 'Japan', 'Taipei City', 'Taichung City', 'Tokyo']
     }
   }
 
