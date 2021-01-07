@@ -26,7 +26,8 @@ class AlbumMap extends Component {
       fetching: true,
       photos: [],  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
       centerPhoto: undefined,
-      defaultZoom: 10
+      defaultZoom: 10,
+      openInfo: false,
     }
   }
 
@@ -42,7 +43,8 @@ class AlbumMap extends Component {
           fetching: false,
           photos: photos.data,
           centerPhoto: centerPhoto,
-          defaultZoom: 14
+          defaultZoom: 14,
+          openInfo: true
         })
       }
       else {
@@ -66,14 +68,14 @@ class AlbumMap extends Component {
     getAlbum()
   }
 
-  renderGoogleApi = (map, maps, photos, centerPhoto) => {  // map is the map instance, maps is the maps API object
+  renderGoogleApi = (map, maps, photos, centerPhoto, openInfo) => {  // map is the map instance, maps is the maps API object
     const markers = [];
     const infowindows = [];
     let centerPhotoIndex = undefined;
 
     photos.filter( photo => photo.location)
           .forEach( (photo, index) => {
-      if ( photo.id === centerPhoto.id) {
+      if ( openInfo && photo.id === centerPhoto.id) {
         centerPhotoIndex = index
       }
       markers.push(new maps.Marker({
@@ -100,7 +102,7 @@ class AlbumMap extends Component {
   }
 
   render () {
-    const { photos, centerPhoto, defaultZoom } = this.state
+    const { photos, centerPhoto, defaultZoom, openInfo } = this.state
     console.log('centerphoto', centerPhoto)
     const centerLoc = (!centerPhoto || !centerPhoto.location) ? (
                         NTULibrary
@@ -119,7 +121,7 @@ class AlbumMap extends Component {
             defaultCenter={centerLoc}
             defaultZoom={defaultZoom}
             yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos, centerPhoto)}
+            onGoogleApiLoaded={({map, maps}) => this.renderGoogleApi(map, maps, photos, centerPhoto, openInfo)}
           >
           </GoogleMap>
         </div>
