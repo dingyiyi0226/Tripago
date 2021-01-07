@@ -222,6 +222,18 @@ app.get('/platform-album-address', async (req, res) => {
   }
 })
 
+app.get('/platform-album-coverphoto', async (req, res) => {
+  const { user, album } = req.query
+  const coverPhotoSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+
+  if (coverPhotoSnapshot.data() && coverPhotoSnapshot.data().coverPhoto) {
+    res.status(200).send(coverPhotoSnapshot.data().coverPhoto)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+
 app.get('/platform-album-photos', async (req, res) => {
   const { user, album } = req.query
 

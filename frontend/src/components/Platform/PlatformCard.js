@@ -74,7 +74,7 @@ class PlatformCard extends Component {
         </Card.Header>
         <Card.Body>
           <Media>
-            <Image src={this.state.profilePic} rounded />
+            <Image src={this.state.profilePic} rounded className="profilePic"/>
             <Media.Body>
               <h5>{this.props.album}</h5>
               { this.state.expand ? (

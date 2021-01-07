@@ -23,7 +23,7 @@ class PlatformCardMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      fetching: false,  // TODO
+      fetching: true,
       photos: [],  //  Type: [{ id:, url:, location: {_latitude, _longitude}}, ]
       centerPhoto: undefined,
       defaultZoom: 10
@@ -31,11 +31,12 @@ class PlatformCardMap extends Component {
   }
 
   componentDidMount() {
-
+    const { user, album } = this.props
+    console.log('cardmap mount')
     const getAlbum = async () => {
-      const photos = await instance.get('/album-photos', { params: {album: this.props.id}})
-      const coverPhoto = await instance.get('album-coverphoto', { params: {album: this.props.id}})
-      
+      const photos = await instance.get('/platform-album-photos', {params: {user: user, album: album}})
+      const coverPhoto = await instance.get('platform-album-coverphoto', {params: {user: user, album: album}})
+      console.log(photos.data)
       if (!coverPhoto.data || !coverPhoto.data.location) {
         this.setState({
           fetching: false,
@@ -50,20 +51,16 @@ class PlatformCardMap extends Component {
         })
       }
     }
-    // getAlbum()  // TODO
+    getAlbum()
   }
 
   renderGoogleApi = (map, maps, photos, centerPhoto) => {  // map is the map instance, maps is the maps API object
     const markers = [];
     const infowindows = [];
-    let centerPhotoIndex = undefined;
-    // TODO
-    /*
+
     photos.filter( photo => photo.location)
-          .forEach( (photo, index) => {
-      if ( photo.id === centerPhoto.id) {
-        centerPhotoIndex = index
-      }
+          .forEach( photo => {
+
       markers.push(new maps.Marker({
         position: {
           lat: photo.location._latitude,
@@ -82,25 +79,20 @@ class PlatformCardMap extends Component {
         infowindows[i].open(map, marker);
       })
     })
-    if (centerPhotoIndex !== undefined ){
-      infowindows[centerPhotoIndex].open(map, markers[centerPhotoIndex]);
-    }
-    */
   }
 
   render () {
-    const { photos, centerPhoto, defaultZoom } = this.state
-    console.log('centerphoto', centerPhoto)
-    const centerLoc = (!centerPhoto || !centerPhoto.location) ? (
-                        NTULibrary
-                      ) : (
-                        { lat: centerPhoto.location._latitude, lng: centerPhoto.location._longitude }
-                      )
-
     if(this.state.fetching) {
       return <h3>Fetching Photo Locations</h3>
     }
     else {
+      const { photos, centerPhoto, defaultZoom } = this.state
+      const centerLoc = (!centerPhoto || !centerPhoto.location) ? (
+                          NTULibrary
+                        ) : (
+                          { lat: centerPhoto.location._latitude, lng: centerPhoto.location._longitude }
+                        )
+
       return (
         <div className="platform-card-map">
           <GoogleMap
