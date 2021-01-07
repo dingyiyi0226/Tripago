@@ -29,8 +29,7 @@ const LoginButton = (email, password) => {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		const res = await login(email, password);
-		const { status, message } = res.data;
+		const { status, message } = await login(email, password);
 		console.log('Received login status: ', status, message)
 		if (status.isLogin) {
 			setLoginStatus(status);
@@ -98,7 +97,7 @@ class Login extends Component {
 				    placeholder="Password"
 				    name="password"
 				    value={this.state.password}
-				    onChange={this.handleChange} />
+				    onChange={this.handleChange} />r
 				  </Form.Group>
 				  <LoginButton email={this.state.email} password={this.state.password}/>
 				</Form>

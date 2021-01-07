@@ -32,7 +32,7 @@ class RegistrationAlert extends Component {
 }
 
 
-const RegistrationButton = (email, password) => {
+const RegistrationButton = (email, name, password) => {
 	const {loginStatus, setLoginStatus} = useContext(LoginContext);
 	const [errorMessage, setErrorMessage] = useState("");
 
@@ -45,7 +45,7 @@ const RegistrationButton = (email, password) => {
 
 	const handleClick = async (e) => {
 		e.preventDefault();
-		const { status, message } = await register(email, password);
+		const { status, message } = await register(email, name, password);
 		console.log('Received registration response: ', status, message)
 		if (status.isLogin) {
 			setLoginStatus(status);
@@ -80,6 +80,7 @@ class Registration extends Component {
 		super(props);
 		this.state = {
 			email: "",
+			name: "",
 			password: "",
 			passwordConfirm: "",
 			passwordChanged: false,
@@ -113,6 +114,16 @@ class Registration extends Component {
 				    	onChange={this.handleChange}/>
 				  </Form.Group>
 
+				  <Form.Group controlId="formBasicEmail">
+				    <Form.Label>User name</Form.Label>
+				    <Form.Control 
+				    	type="text" 
+				    	placeholder="Enter username" 
+				    	name="name" 
+				    	value={this.state.name} 
+				    	onChange={this.handleChange}/>
+				  </Form.Group>
+
 				  <Form.Group controlId="formBasicPassword">
 				    <Form.Label>Password</Form.Label>
 				    <Form.Control 
@@ -135,7 +146,11 @@ class Registration extends Component {
 				  <div style={{"width": "80%", "margin":"auto"}}>
 					  <UnmatchedPwdAlert data={this.state}/>
 				  </div>
-				  <RegistrationButton />
+				  <RegistrationButton 
+				  	email={this.state.email} 
+				  	name={this.state.name} 
+				  	password={this.state.password} 
+				  />
 				</Form>
 			</div>);
 	}

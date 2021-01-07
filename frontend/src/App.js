@@ -14,9 +14,10 @@ function App() {
 	});
 	const value = { loginStatus, setLoginStatus };
 
-	useEffect(() => {
-		const new_loginStatus = checkLoginStatus();
-		setLoginStatus(new_loginStatus);
+	useEffect(async () => {
+		const new_loginStatus = await checkLoginStatus();
+		console.log('newstatus@App',new_loginStatus.data)
+		setLoginStatus(new_loginStatus.data);
 	}, []);
 
   return (

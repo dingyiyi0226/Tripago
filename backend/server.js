@@ -37,15 +37,45 @@ const USER = 'ethia_polis';
 // const USER = 'PKdropthebeat';
 const userID = '12345';
 let users = [
-  {userID: 1, userName: 'Alice', email: 'alice@gmail.com', password: 'qwerty'},
-  {userID: 2, userName: 'Bob', email: 'bob@gmail.com', password: 'qwerty'},
-  {userID: 3, userName: 'Nebuchadnezzar', email: 'nebuchadnezzar@gmail.com', password: 'qwerty'},
-  {userID: 4, userName: '', email: '', password: ''}
+  {userID: '1', userName: 'Alice', email: 'alice@gmail.com', password: 'qwerty'},
+  {userID: '2', userName: 'Bob', email: 'bob@gmail.com', password: 'qwerty'},
+  {userID: '3', userName: 'Nebuchadnezzar', email: 'nebuchadnezzar@gmail.com', password: 'qwerty'},
+  {userID: '4', userName: '', email: '', password: ''}
 ];
 
 
 const upload = multer({storage: storage});
 const MAX_FILE = 12;
+
+// Some response format
+
+const SESSION_LOGGED_IN = (name) => {
+  return {
+    isLogin: true,
+    name: name
+  }
+};
+
+const SESSION_NOT_LOGGED_IN = () => {
+  return {
+    isLogin: false,
+    name: ''
+  }
+};
+
+const LOGGED_IN = (name) => {
+  return {
+    status: SESSION_LOGGED_IN(name),
+    message: 'Login successfully'
+  }
+};
+
+const NOT_LOGGED_IN = (name) => {
+  return {
+    status: SESSION_NOT_LOGGED_IN(),
+    message: 'Wrong email or password'
+  }
+};
 
 /**
   DB Schema (temp version)
@@ -198,37 +228,66 @@ app.get('/platform', async (req, res) => {
   res.status(200).send(validAlbums)
 })
 
-// testing
-app.post('/login', (req, res) => {
-  console.log('login called')
-  const { email, password } = req.body;
-  const user = users.find((user) => {
-    return user.email === email && user.password === password;
-  });
-  console.log(user?user:'user not found')
-  const { userID } = req.session;
-
-  if(user) {
-    req.session.userID = user.userID;
-    res.send({
-    status: {
-      isLogin: true,
-      userID: user.userID
-    },
-    message: 'login success'
-  })
-  } else {
-    res.send({
-      status: {
-        isLogin: false,
-        userID: ''
-      },
-      message: 'Wrong username or password'
-    });
-  } 
-  console.log(req.session)
+// Login & Sessions
+app.post('/register', async (req, res) => {
+  //TODO
 });
 
+app.post('/login', async (req, res) => {
+  console.log('login called')
+  const { email, password } = req.body;
+  console.log('received: ', email, password);
+  const userDoc = await firestore
+    .collection('all-users')
+    .where('email', '==', email)
+    .where('password', '==', password)
+    .get();
+  let userID = '';
+  let name = '';
+  userDoc.forEach(doc => {
+    userID = String(doc.id);
+    name = doc.data().name;
+  })
+  if (userID) { // login successfully
+    req.session.userID = userID;
+    res.status(200).send(LOGGED_IN(name));
+  } else { // user not found
+    res.status(200).send(NOT_LOGGED_IN());
+  }
+});
+
+app.post('/logout', async (req, res) => {
+  req.session.destroy( err => {
+    console.log(err);
+  });
+  res.status(200).send('logged out');
+});
+
+app.get('/session', async (req, res) => {
+  const sessionID = req.sessionID;
+  console.log('/session req:', sessionID);
+
+  const validated = await firestore
+    .collection('express-sessions')
+    .doc(sessionID)
+    .get();
+
+  const data = validated.data(); // undefined or {..., data: '{"cookie":{...},"userID":"???"}'}
+  if (data) {
+    const userID = String(JSON.parse(data.data).userID);
+    const userDoc = await firestore
+      .collection('all-users')
+      .doc(userID)
+      .get();
+    const userName = userDoc.data().name;
+    console.log('userName:', userName);
+
+    req.session.userID = userID;
+    res.status(200).send(SESSION_LOGGED_IN(userName));
+  } else {
+    res.status(200).send(SESSION_NOT_LOGGED_IN());
+  }
+});
 
 // Debug function
 app.get('/', (req, res) => {

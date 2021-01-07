@@ -19,51 +19,56 @@ const test_login_response = {
 			isLogin: false,
 			userID: ''
 		},
-		message: 'Wrong username or password'
+		message: 'Wrong email or password'
 	}
-}
+};
 
 const register_error_response = {
 	status: {
 		isLogin: false,
 		userID: ''
 	},
-	message: 'Register failed'
-}
-
-const delay = (s) => {
-  return new Promise(resolve => {
-    setTimeout(resolve,s); 
-  });
+	message: 'Registration failed'
 };
 
 const login = async (user) => {
 	const { email, password } = user;
-	// await delay(500);
-	const res = await instance.post('./login', user)
-	console.log('server response:',res)
-	return res
+	let data = undefined;
+	const res = await instance
+		.post('/login', user)
+		.then((res) => {
+			console.log('Login 200: ', res.data);
+			data = res.data;
+		})
+		.catch((err) => {
+			console.log('Login err: ', err);
+			data = test_login_response.fail;
+		});
+	return data;
 };
 
 const register = async (user) => {
-	const { email, password } = user;
+	const { email, name, password } = user;
 	// do something for register
-	let registerSuccess = false;
+	const res = await instance.post('/register', user);
+	console.log(res)
+	let registerSuccess = false
 	if (registerSuccess) {
-		return login(user)
+		return login(user);
 	} else {
-		return register_error_response
+		return register_error_response;
 	}
 
 };
 
-const logout = () => {
-	return true;
+const logout = async () => {
+	const res = instance.post('/logout');
 };
 
-const checkLoginStatus = () => {
-	console.log('checkLoginStatus called')
-	return test_login_response.success.status;
+const checkLoginStatus = async () => {
+	console.log('checkLoginStatus called');
+	const res = await instance.get('/session') // {isLogin: Bool, name: String}
+	return res;
 };
 
 export { login, register, logout, checkLoginStatus }
