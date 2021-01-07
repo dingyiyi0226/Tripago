@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation} from 'react-router-dom'
+import axios from 'axios'
+import { useLocation } from 'react-router-dom'
 import PlatformCard from './PlatformCard.js'
 import './Platform.css'
+
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+
+const instance = axios.create({
+  baseURL: URL_ROOT
+})
 
 function useQuery() {
   const params = new URLSearchParams(useLocation().search)
@@ -9,14 +16,19 @@ function useQuery() {
 }
 
 function PlatformContent(props) {
+  const [ albums, setAlbums ] = useState([])
   
   let region = useQuery()
   useEffect(() => {
     console.log('useeffect', region)
     // TODO: Fetch data from backend
-
-  })
-
+    const getAlbums = async () => {
+      const res = await instance.get('/platform', { params: {region: region}})
+      // console.log(res.data)
+      setAlbums(res.data)
+    }
+    getAlbums()
+  }, [region])
 
   return (
     <div className="h-100">
@@ -24,9 +36,12 @@ function PlatformContent(props) {
         Region - { region || 'All Region' }
       </p>
       <div className="platform">
-        <PlatformCard />
-        <PlatformCard />
-        <PlatformCard />
+        { albums.length ? (
+            albums.map( album => (<PlatformCard user={album.user} album={album.albumName}/>) )
+          ) : (
+            <h3> No Result</h3>
+          )
+        }
 
       </div>
     </div>

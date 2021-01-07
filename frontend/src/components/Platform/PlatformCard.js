@@ -27,7 +27,7 @@ class PlatformCard extends Component {
     return (
       <Card className="platform-card">
         <Card.Header className="d-flex justify-content-between align-items-center">
-          {this.state.region}
+          {this.props.user}
           <Button variant="info" size='sm' onClick={this.toggleExpand}>
             { this.state.expand ? 'Hide' : 'Expand'}
           </Button>
@@ -36,7 +36,7 @@ class PlatformCard extends Component {
           <Media>
             <Image src={this.state.profilePic} rounded />
             <Media.Body>
-              <h5>{this.state.album.id}</h5>
+              <h5>{this.props.album}</h5>
               { this.state.expand ? (
                   <CardMap />
                 ) : (
