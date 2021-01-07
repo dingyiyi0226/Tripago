@@ -13,7 +13,9 @@ import Platform from '../components/Platform'
 
 const Tripago = () => {
   const {loginStatus, setloginStatus} = useContext(LoginContext);
+  console.log('@Tripago',loginStatus)
   if (!loginStatus.isLogin) {
+    console.log('Tripago rendered, not logged in')
     return (
       <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Header />
@@ -31,6 +33,7 @@ const Tripago = () => {
       </BrowserRouter>
       );
   }
+  console.log('Tripago rendered, logged in')
   return (
     <BrowserRouter basename={ process.env.PUBLIC_URL }>
       <Header />

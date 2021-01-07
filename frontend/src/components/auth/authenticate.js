@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
-
 const instance = axios.create({
   baseURL: URL_ROOT,
   withCredentials: true
@@ -63,8 +62,8 @@ const logout = () => {
 };
 
 const checkLoginStatus = () => {
-	// console.log(this)
-	return test_login_response.fail;
+	console.log('checkLoginStatus called')
+	return test_login_response.success.status;
 };
 
 export { login, register, logout, checkLoginStatus }

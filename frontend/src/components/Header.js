@@ -10,6 +10,7 @@ const UserButtons = () => {
   // console.log(isLogin, setIsLogin)
 
   if (!loginStatus.isLogin) {
+    console.log('userbuttons rendered, not logged in')
     return (
       <Nav className="justify-content-end">
         <Nav.Item>
@@ -21,6 +22,7 @@ const UserButtons = () => {
       </Nav>
     );
   }
+  console.log('userbuttons rendered, logged in')
   return (
     <Nav className="justify-content-end">
       <Nav.Item
