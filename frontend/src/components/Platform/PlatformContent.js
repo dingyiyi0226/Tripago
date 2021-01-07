@@ -39,7 +39,7 @@ function PlatformContent(props) {
         { albums.length ? (
             albums.map( album => (<PlatformCard user={album.user} album={album.albumName} key={`${album.user}-${album.albumName}`}/>) )
           ) : (
-            <h3> No Result</h3>
+            <h3 className="no-result"> No Result</h3>
           )
         }
 
