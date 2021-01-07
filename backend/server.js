@@ -7,11 +7,12 @@ import { Firestore } from '@google-cloud/firestore'
 import { FirestoreStore } from '@google-cloud/connect-firestore'
 import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
 
-
+const allowed_origins = ['http://localhost:3000', 'https://dingyiyi0226.github.io']
 
 const app = express();
 app.use(cors({
-  credentials: true,  origin: 'http://localhost:3000'
+  credentials: true,
+  origin: allowed_origins
 }));
 app.use(express.json());
 app.use(
