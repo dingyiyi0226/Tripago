@@ -4,7 +4,7 @@ import { Image } from 'react-bootstrap'
 import './component.css'
 import testpic from './testpic.png'
 
-class Profile extends Component {
+class ProfileSidebar extends Component {
   
   render () {
     return (
@@ -21,4 +21,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile
+export default ProfileSidebar
