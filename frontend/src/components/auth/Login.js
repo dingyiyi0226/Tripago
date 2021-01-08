@@ -97,7 +97,7 @@ class Login extends Component {
 				    placeholder="Password"
 				    name="password"
 				    value={this.state.password}
-				    onChange={this.handleChange} />r
+				    onChange={this.handleChange} />
 				  </Form.Group>
 				  <LoginButton email={this.state.email} password={this.state.password}/>
 				</Form>
