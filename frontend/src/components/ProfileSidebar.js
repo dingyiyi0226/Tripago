@@ -1,24 +1,38 @@
 import React, { Component } from 'react'
 import { Image } from 'react-bootstrap'
+import axios from 'axios'
 
 import './component.css'
 import testpic from './testpic.png'
+
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+const instance = axios.create({
+  baseURL: URL_ROOT,
+  withCredentials: true
+})
 
 class ProfileSidebar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userName: 'Ethia Polis',
-      userDescription: 'SuperStar',
-      userPhoto: testpic
+      userName: '',
+      userDescription: '',
+      userPhoto: ''
     }
   }
 
   componentDidMount() {
     const getUserInfo = async () => {
-      console.log('getUserInfo')
+      await instance
+        .get('/profile')
+        .then((res) => {
+          this.setState(res.data);
+          this.setState({userPhoto: testpic}) // userPhoto not handled yet
+        })
+        .catch((err) => {
+          console.log('ProfileDidMountError: ', err);
+        });
     }
-
     getUserInfo()
   }
   

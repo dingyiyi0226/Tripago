@@ -105,6 +105,26 @@ const REGISTRATION_FAIL = () => {
   - user2
  */
 
+app.get('/profile', async (req, res) => {
+  const userID = req.session.userID;
+  const userPhoto = './testpic.png'; //tmp
+  if (userID) {
+    const userDoc = await firestore
+      .collection(ALL_USERS_COLLECTION)
+      .doc(userID)
+      .get();
+    const userName = userDoc.data().name;
+    const userDescription = userDoc.data().description;
+    res.status(200).send({
+      userName: userName,
+      userDescription: userDescription,
+      userPhoto: userPhoto
+    });
+  } else {
+    res.status(404).send('USER NOT FOUND')
+  }
+});
+
 app.get('/albums', async (req, res) => {
   const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
   const albums = []
