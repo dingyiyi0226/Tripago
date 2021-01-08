@@ -32,6 +32,8 @@ const cloudStorage = new Storage();
 const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 const firestore = new Firestore();
 
+const ALL_USERS_COLLECTION = 'all-users';
+
 //Some tmp data
 const USER = 'ethia_polis';
 // const USER = 'PKdropthebeat';
@@ -70,10 +72,17 @@ const LOGGED_IN = (name) => {
   }
 };
 
-const NOT_LOGGED_IN = (name) => {
+const NOT_LOGGED_IN = () => {
   return {
     status: SESSION_NOT_LOGGED_IN(),
     message: 'Wrong email or password'
+  }
+};
+
+const REGISTRATION_FAIL = () => {
+  return {
+    status: SESSION_NOT_LOGGED_IN(),
+    message: 'Email already exists'
   }
 };
 
@@ -222,15 +231,49 @@ app.get('/platform', async (req, res) => {
       })
     }
   }
-
   console.log(validAlbums)
-
   res.status(200).send(validAlbums)
 })
 
 // Login & Sessions
 app.post('/register', async (req, res) => {
-  //TODO
+  const {email, name, password} = req.body;
+  const userDoc = await firestore
+    .collection(ALL_USERS_COLLECTION)
+    .where('email', '==', email)
+    .get();
+
+  let userID = '';
+  userDoc.forEach( doc => {
+    userID = doc.id;
+  });
+
+  if (userID) { // user existed
+    console.log('existed userID: ', userID);
+    res.status(200).send(REGISTRATION_FAIL());
+  } else {
+    const userInfoDoc = await firestore
+      .collection(ALL_USERS_COLLECTION)
+      .doc('info');
+    const userInfo = await userInfoDoc.get();
+    const lastestID = userInfo.data().lastestID;
+    userID = String(1 + Number(lastestID));
+    const usersRef = firestore
+      .collection(ALL_USERS_COLLECTION)
+      .doc(userID);
+    const DBres = await usersRef.set({
+      email: email,
+      name: name,
+      password: password,
+      description: ""
+    }).then(() => {
+      userInfoDoc.set({lastestID: userID});
+      req.session.userID = userID;
+      res.status(200).send(LOGGED_IN(name));
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
 });
 
 app.post('/login', async (req, res) => {
@@ -238,7 +281,7 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   console.log('received: ', email, password);
   const userDoc = await firestore
-    .collection('all-users')
+    .collection(ALL_USERS_COLLECTION)
     .where('email', '==', email)
     .where('password', '==', password)
     .get();
@@ -276,7 +319,7 @@ app.get('/session', async (req, res) => {
   if (data) {
     const userID = String(JSON.parse(data.data).userID);
     const userDoc = await firestore
-      .collection('all-users')
+      .collection(ALL_USERS_COLLECTION)
       .doc(userID)
       .get();
     const userName = userDoc.data().name;

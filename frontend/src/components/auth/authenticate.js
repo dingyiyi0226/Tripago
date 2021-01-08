@@ -50,15 +50,18 @@ const login = async (user) => {
 const register = async (user) => {
 	const { email, name, password } = user;
 	// do something for register
-	const res = await instance.post('/register', user);
-	console.log(res)
-	let registerSuccess = false
-	if (registerSuccess) {
-		return login(user);
-	} else {
-		return register_error_response;
-	}
-
+	let data = undefined;
+	const res = await instance
+	.post('/register', user)
+	.then((res) => {
+		console.log('Register + Login 200: ', res.data);
+		data = res.data;
+	})
+	.catch((err) => {
+		console.log('Registration Error: ', err)
+		data = test_login_response.fail;
+	})
+	return data;
 };
 
 const logout = async () => {
