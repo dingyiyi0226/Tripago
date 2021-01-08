@@ -40,6 +40,25 @@
   transform: scale(1.01);
 }
 
+.albums-gallery .card .cross {
+  width: 40px;
+  height: 40px;
+
+  position: absolute;
+  top: -15px;
+  right: -15px;
+
+  background-color: white;
+  border-radius: 50%;
+
+  opacity: 0;
+}
+
+.albums-gallery .card:hover .cross {
+  cursor: pointer;
+  opacity: 1;
+}
+
 .albums-gallery  .card-img__wrapper {
   padding-bottom: 100%;
   overflow: hidden;

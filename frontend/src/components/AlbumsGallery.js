@@ -6,6 +6,7 @@ import { Card, Container, Row, Col } from 'react-bootstrap'
 import './component.css'
 import albumCreationCover from './add-outline.svg'
 import albumDefaultCover from './testpic2.png'
+import crossImg from './close-circle-outline.svg'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 
@@ -33,6 +34,15 @@ class AlbumsGallery extends Component {
       })
     }
     getAlbums()
+  }
+
+  onDeleteAlbum = async (e, id) => {
+    e.preventDefault()
+    console.log('ondeleteAlbum', id)
+    // const res = await instance.delete('/album', {params: {album: id}})
+    this.setState( state => ({
+      albums: state.albums.filter( album => album.id !== id)
+    }))
   }
 
   render () {
@@ -63,6 +73,7 @@ class AlbumsGallery extends Component {
                         )
                       }
                       </div>
+                      <img className="cross" src={crossImg} onClick={(e) => this.onDeleteAlbum(e, album.id)}/>
                       <Card.Footer>{album.id}</Card.Footer>
                     </Card>
                   </Col>

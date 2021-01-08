@@ -198,7 +198,7 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
 })
 
 app.get('/platform', async (req, res) => {
-  let { region } = await req.query
+  let { region } = req.query
   if (region){
     region = region.toLowerCase()
   }
@@ -233,6 +233,53 @@ app.get('/platform', async (req, res) => {
   }
   console.log(validAlbums)
   res.status(200).send(validAlbums)
+})
+
+app.get('/platform-album-description', async (req, res) => {
+  const { user, album } = req.query
+  const albumSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+
+  if (albumSnapshot.data() && albumSnapshot.data().description) {
+    res.status(200).send(albumSnapshot.data().description)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+
+app.get('/platform-album-address', async (req, res) => {
+  const { user, album } = req.query
+  const albumSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+  // console.log(albumSnapshot.data().coverPhoto.address)
+  if (albumSnapshot.data() && albumSnapshot.data().coverPhoto && albumSnapshot.data().coverPhoto.address) {
+    res.status(200).send(albumSnapshot.data().coverPhoto.address)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+
+app.get('/platform-album-coverphoto', async (req, res) => {
+  const { user, album } = req.query
+  const coverPhotoSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+
+  if (coverPhotoSnapshot.data() && coverPhotoSnapshot.data().coverPhoto) {
+    res.status(200).send(coverPhotoSnapshot.data().coverPhoto)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+
+app.get('/platform-album-photos', async (req, res) => {
+  const { user, album } = req.query
+
+  const photosSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).get()
+  const photos = []
+  photosSnapshot.forEach( photo => {
+    photos.push({id: photo.id, ...photo.data()})
+  })
+  res.status(200).send(photos)
 })
 
 // Login & Sessions
@@ -276,7 +323,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login', (req, res) => {
   console.log('login called')
   const { email, password } = req.body;
   console.log('received: ', email, password);
