@@ -39,7 +39,7 @@ class AlbumsGallery extends Component {
   onDeleteAlbum = async (e, id) => {
     e.preventDefault()
     console.log('ondeleteAlbum', id)
-    // const res = await instance.delete('/album', {params: {album: id}})
+    const res = await instance.delete('/album', {params: {album: id}})
     this.setState( state => ({
       albums: state.albums.filter( album => album.id !== id)
     }))

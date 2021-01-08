@@ -114,6 +114,23 @@ app.get('/albums', async (req, res) => {
   res.status(200).send(albums)
 })
 
+app.delete('/album', async (req, res) => {
+  const { album } = req.query
+
+  const photoDoc = await firestore.doc(`users/${USER}/albums/${album}`);
+
+  await cloudBucket.deleteFiles({
+    force: true,
+    prefix: `${USER}/${album}/`
+  })
+
+  await photoDoc.delete()
+  console.log('finish delete', album)
+
+  res.status(200).send()
+
+})
+
 app.post('/album-create', async (req, res) => {
   const { albumName, albumDescription } = req.body
   const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
