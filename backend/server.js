@@ -323,7 +323,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   console.log('login called')
   const { email, password } = req.body;
   console.log('received: ', email, password);
