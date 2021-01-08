@@ -99,13 +99,13 @@ async function updateAlbumCoverPhoto(user, album) {
   if (coverPhotoSnapshot.empty) {
     await albumDoc.set({
       coverPhoto: {}
-    })
+    }, {merge: true})
   }
   else {
     const coverPhotoData = coverPhotoSnapshot.docs[0].data()
     await albumDoc.set({
       coverPhoto: coverPhotoData
-    })
+    }, {merge: true})
   }
 }
 
