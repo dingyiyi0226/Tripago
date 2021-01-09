@@ -8,12 +8,14 @@ import Album from '../components/Album'
 import AlbumCreation from '../components/AlbumCreation.js'
 import Login from '../components/auth/Login'
 import Registration from '../components/auth/Registration'
+// import {checkLoginStatus} from '../components/auth/authenticate'
 import LoginContext from '../LoginContext.js'
 import Platform from '../components/Platform'
 
 const Tripago = () => {
-  const {loginStatus, setloginStatus} = useContext(LoginContext);
+  const { loginStatus } = useContext(LoginContext);
   console.log('@Tripago',loginStatus)
+
   if (!loginStatus.isLogin) {
     console.log('Tripago rendered, not logged in')
     return (

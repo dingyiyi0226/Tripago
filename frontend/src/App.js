@@ -7,7 +7,7 @@ import Tripago from './containers/Tripago.js';
 import LoginContext from './LoginContext.js';
 import { checkLoginStatus } from './components/auth/authenticate'
 
-function App() {
+const App = () => {
 	const [loginStatus, setLoginStatus] = useState({
 		isLogin: false,
 		userID: undefined

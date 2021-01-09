@@ -32,7 +32,6 @@ const register_error_response = {
 };
 
 const login = async (user) => {
-	const { email, password } = user;
 	let data = undefined;
 	const res = await instance
 		.post('/login', user)
@@ -48,7 +47,6 @@ const login = async (user) => {
 };
 
 const register = async (user) => {
-	const { email, name, password } = user;
 	// do something for register
 	let data = undefined;
 	const res = await instance
