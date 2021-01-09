@@ -153,7 +153,10 @@ app.delete('/album', async (req, res) => {
 
 app.post('/album-create', async (req, res) => {
   const { albumName, albumDescription } = req.body
-  const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
+  const userID = req.session.userID
+  console.log('userID @ album create:', userID)
+  // const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
+  const albumRef = await firestore.doc(`all-users/${userID}/albums/${albumName}`)
   try {
     await albumRef.create({description: albumDescription})
     console.log('album create successfully')
