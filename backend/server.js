@@ -105,7 +105,7 @@ const REGISTRATION_FAIL = () => {
   - user2
  */
 
-app.get('/profile', async (req, res) => {
+app.get('/profile', async (req, res) => { //compatible with session
   const userID = req.session.userID;
   const userPhoto = './testpic.png'; //tmp
   if (userID) {
@@ -125,7 +125,7 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-app.get('/albums', async (req, res) => {
+app.get('/albums', async (req, res) => { //compatible with session
   const userID = req.session.userID
   // const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
   const albumsSnapshot = await firestore.collection(`all-users/${userID}/albums`).get()
@@ -136,24 +136,24 @@ app.get('/albums', async (req, res) => {
   res.status(200).send(albums)
 })
 
-app.delete('/album', async (req, res) => {
+app.delete('/album', async (req, res) => { //compatible with session
   const { album } = req.query
+  const userID = req.session.userID
 
-  const photoDoc = await firestore.doc(`users/${USER}/albums/${album}`);
+  const photoDoc = await firestore.doc(`all-users/${userID}/albums/${album}`);
 
   await cloudBucket.deleteFiles({
     force: true,
-    prefix: `${USER}/${album}/`
+    prefix: `${userID}/${album}/`
   })
 
   await photoDoc.delete()
   console.log('finish delete', album)
 
   res.status(200).send()
-
 })
 
-app.post('/album-create', async (req, res) => { // changed to new DB
+app.post('/album-create', async (req, res) => { //compatible with session
   const { albumName, albumDescription } = req.body
   const userID = req.session.userID
   // const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
@@ -169,7 +169,7 @@ app.post('/album-create', async (req, res) => { // changed to new DB
   }
 })
 
-app.get('/album-photos', async (req, res) => { //changed to new DB
+app.get('/album-photos', async (req, res) => { //compatible with session
   const { album } = req.query
   const userID = req.session.userID
 
@@ -181,7 +181,7 @@ app.get('/album-photos', async (req, res) => { //changed to new DB
   res.status(200).send(photos)
 })
 
-app.get('/album-coverphoto', async (req, res) => {
+app.get('/album-coverphoto', async (req, res) => { //compatible with session
   const { album } = req.query
   const userID = req.session.userID
   const coverPhotoSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
@@ -194,7 +194,7 @@ app.get('/album-coverphoto', async (req, res) => {
   }
 })
 
-app.get('/album-description', async (req, res) => {
+app.get('/album-description', async (req, res) => { //compatible with session
   const { album } = req.query
   const userID = req.session.userID
   const albumSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
@@ -208,24 +208,25 @@ app.get('/album-description', async (req, res) => {
 })
 
 
-app.delete('/photo', async (req, res) => {
+app.delete('/photo', async (req, res) => { //compatible with session
   const { album, photo } = req.query
+  const userID = req.session.userID
 
-  const photoFile = await cloudBucket.file(`${USER}/${album}/${photo}`);
-  const photoDoc = await firestore.doc(`users/${USER}/albums/${album}/photos/${photo}`);
+  const photoFile = await cloudBucket.file(`${userID}/${album}/${photo}`);
+  const photoDoc = await firestore.doc(`all-users/${userID}/albums/${album}/photos/${photo}`);
 
   await photoFile.delete()
   await photoDoc.delete()
   // console.log('finish delete', album, photo)
 
-  await updateAlbumCoverPhoto(USER, album)
+  await updateAlbumCoverPhoto(userID, album)
 
   res.status(200).send()
 
 })
 
 
-app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, next) => {
+app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, next) => { //compatible with session
   if (!req.files.length){
     console.log('error')
     res.status(400).send({ message: 'No file uploaded' })
