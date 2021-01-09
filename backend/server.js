@@ -126,7 +126,9 @@ app.get('/profile', async (req, res) => {
 });
 
 app.get('/albums', async (req, res) => {
-  const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
+  const userID = req.session.userID
+  // const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
+  const albumsSnapshot = await firestore.collection(`all-users/${userID}/albums`).get()
   const albums = []
   albumsSnapshot.forEach( album => {
     albums.push({id: album.id, ...album.data()})
@@ -151,10 +153,9 @@ app.delete('/album', async (req, res) => {
 
 })
 
-app.post('/album-create', async (req, res) => {
+app.post('/album-create', async (req, res) => { // changed to new DB
   const { albumName, albumDescription } = req.body
   const userID = req.session.userID
-  console.log('userID @ album create:', userID)
   // const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
   const albumRef = await firestore.doc(`all-users/${userID}/albums/${albumName}`)
   try {
@@ -168,10 +169,11 @@ app.post('/album-create', async (req, res) => {
   }
 })
 
-app.get('/album-photos', async (req, res) => {
+app.get('/album-photos', async (req, res) => { //changed to new DB
   const { album } = req.query
+  const userID = req.session.userID
 
-  const photosSnapshot = await firestore.collection(`users/${USER}/albums/${album}/photos`).get()
+  const photosSnapshot = await firestore.collection(`all-users/${userID}/albums/${album}/photos`).get()
   const photos = []
   photosSnapshot.forEach( photo => {
     photos.push({id: photo.id, ...photo.data()})
@@ -181,7 +183,8 @@ app.get('/album-photos', async (req, res) => {
 
 app.get('/album-coverphoto', async (req, res) => {
   const { album } = req.query
-  const coverPhotoSnapshot = await firestore.doc(`users/${USER}/albums/${album}`).get()
+  const userID = req.session.userID
+  const coverPhotoSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
 
   if (coverPhotoSnapshot.data() && coverPhotoSnapshot.data().coverPhoto) {
     res.status(200).send(coverPhotoSnapshot.data().coverPhoto)
@@ -193,7 +196,8 @@ app.get('/album-coverphoto', async (req, res) => {
 
 app.get('/album-description', async (req, res) => {
   const { album } = req.query
-  const albumSnapshot = await firestore.doc(`users/${USER}/albums/${album}`).get()
+  const userID = req.session.userID
+  const albumSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
 
   if (albumSnapshot.data() && albumSnapshot.data().description) {
     res.status(200).send(albumSnapshot.data().description)
@@ -228,12 +232,13 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   }
 
   // console.log('success')
+  const userID = req.session.userID
   const { album } = JSON.parse(JSON.stringify(req.body))
 
   for (let file of req.files) {
-    await photoProcessing(file, USER, album)  // Should the server response to client immediatly or await photo upload to db or not ?
+    await photoProcessing(file, userID, album)  // Should the server response to client immediatly or await photo upload to db or not ?
   }
-  await updateAlbumCoverPhoto(USER, album)
+  await updateAlbumCoverPhoto(userID, album)
   res.status(200).send();
 })
 

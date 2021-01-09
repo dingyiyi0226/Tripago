@@ -8,7 +8,7 @@ const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 
 const firestore = new Firestore();
 
-async function photoProcessing(file, user, album) {
+async function photoProcessing(file, userID, album) {
 
   let photoUrl = ''
   let photoLoc = {}
@@ -45,7 +45,7 @@ async function photoProcessing(file, user, album) {
   }
 
   const upload2Storage = new Promise((resolve, reject) => {
-    const blob = cloudBucket.file(`${user}/${album}/${file.originalname}`);
+    const blob = cloudBucket.file(`${userID}/${album}/${file.originalname}`);
     const blobStream = blob.createWriteStream({
       resumable: false,
       public: true
@@ -63,8 +63,8 @@ async function photoProcessing(file, user, album) {
   })
 
   const upload2Database = async () => {
-    const photoDoc = firestore.doc(`users/${user}/albums/${album}/photos/${file.originalname}`)
-
+    // const photoDoc = firestore.doc(`users/${user}/albums/${album}/photos/${file.originalname}`)
+    const photoDoc = firestore.doc(`all-users/${userID}/albums/${album}/photos/${file.originalname}`)
     if(noLoc){
       let res = await photoDoc.set({
         url: photoUrl,
@@ -86,15 +86,18 @@ async function photoProcessing(file, user, album) {
   console.log(`finish processing ${file.originalname}`)
 }
 
-async function updateAlbumCoverPhoto(user, album) {
+async function updateAlbumCoverPhoto(userID, album) {
 
-  const albumSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+  // const albumSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
+  const albumSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
   // console.log('update', albumSnapshot)
   const albumData = albumSnapshot.data()
 
   console.log('change coverphoto')
-  const coverPhotoSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).limit(1).get()
-  const albumDoc = await firestore.doc(`users/${user}/albums/${album}`)
+  // const coverPhotoSnapshot = await firestore.collection(`users/${user}/albums/${album}/photos`).limit(1).get()
+  const coverPhotoSnapshot = await firestore.collection(`all-users/${userID}/albums/${album}/photos`).limit(1).get()
+  // const albumDoc = await firestore.doc(`users/${user}/albums/${album}`)
+  const albumDoc = await firestore.doc(`all-users/${userID}/albums/${album}`)
 
   if (coverPhotoSnapshot.empty) {
     await albumDoc.set({

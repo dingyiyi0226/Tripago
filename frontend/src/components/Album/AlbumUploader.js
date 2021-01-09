@@ -10,7 +10,8 @@ const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 
 const imageUploadInstance = axios.create({
   baseURL: URL_ROOT,
-  headers: {'content-type': 'multipart/form-data'}
+  headers: {'content-type': 'multipart/form-data'},
+  withCredentials: true
 })
 
 class AlbumUploader extends Component {
