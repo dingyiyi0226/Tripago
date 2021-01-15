@@ -72,8 +72,7 @@ class TravelMap extends Component {
     }
     else {
       return (
-        <div className="py-3 travel-map__container">
-          <h2>TravelMap</h2>
+        <div className="p-4 travel-map__container">
           <div className="travel-map">
             <GoogleMap
               bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
