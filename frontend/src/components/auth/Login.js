@@ -85,7 +85,7 @@ class Login extends Component {
         </Alert>
         <Form>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label><br/>Email Address</Form.Label>
+            <Form.Label>Email Address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
