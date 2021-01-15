@@ -46,7 +46,7 @@ class Header extends Component {
         <Navbar.Brand as={NavLink} to="/home">Tripago</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Item>
-            <Nav.Link as={NavLink} to="/home">Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/map">Map</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link as={NavLink} to="/albums">Albums</Nav.Link>
