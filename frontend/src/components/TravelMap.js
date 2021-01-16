@@ -9,7 +9,8 @@ const NTULibrary = {lat: 25.0174, lng: 121.5405}
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 const instance = axios.create({
-  baseURL: URL_ROOT
+  baseURL: URL_ROOT,
+  withCredentials: true
 })
 
 const getInfoWindowString = (album) => `
