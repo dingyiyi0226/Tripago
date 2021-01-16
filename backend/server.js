@@ -246,6 +246,7 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   res.status(200).send();
 })
 
+//platform
 app.get('/platform', async (req, res) => {  // i guess it works now
   let { region } = req.query
   if (region){
