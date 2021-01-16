@@ -235,15 +235,18 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   // console.log('success')
   const userID = req.session.userID
   const { album } = JSON.parse(JSON.stringify(req.body))
+  console.log(userID, album, req.files.length)
 
   for (let file of req.files) {
-    await photoProcessing(file, userID, album)  // Should the server response to client immediatly or await photo upload to db or not ?
-  }
+    // Should the server response to client immediatly or await photo upload to db or not ?
+    await photoProcessing(file, userID, album)
+      .catch('fuck here')
+  }  
   await updateAlbumCoverPhoto(userID, album)
   res.status(200).send();
 })
 
-app.get('/platform', async (req, res) => {  // TO BE FIXED !!!!
+app.get('/platform', async (req, res) => {  // i guess it works now
   let { region } = req.query
   if (region){
     region = region.toLowerCase()
@@ -253,37 +256,48 @@ app.get('/platform', async (req, res) => {  // TO BE FIXED !!!!
   let users = []
   let validAlbums = []
 
-  const usersSnapshot = await firestore.collection('users').get()
-  usersSnapshot.forEach( user => {
-    users.push(user.id)
-  })
+  const usersSnapshot = await firestore.collection('all-users').get();
+  usersSnapshot.forEach( userDoc => {
+    users.push({id: userDoc.id, name: userDoc.data().name});
+  });
+  // console.log('users', users);
 
   if (region) {
     const regionPath = new FieldPath('coverPhoto', 'address')
     for (let user of users) {
-      const albumsSnapshot = await firestore.collection(`users/${user}/albums`)
+      const albumsSnapshot = await firestore.collection(`all-users/${user.id}/albums`)
                                      .where( regionPath, 'array-contains', region).get()
       albumsSnapshot.forEach( album => {
-        validAlbums.push({user: user, albumName: album.id})
+        validAlbums.push({user: user.name, albumName: album.id})
       })
     }
   }
   else {
     const regionPath = new FieldPath('coverPhoto', 'address')
     for (let user of users) {
-      const albumsSnapshot = await firestore.collection(`users/${user}/albums`).get()
+      const albumsSnapshot = await firestore.collection(`all-users/${user.id}/albums`).get()
       albumsSnapshot.forEach( album => {
-        validAlbums.push({user: user, albumName: album.id})
+        validAlbums.push({user: user.name, albumName: album.id})
       })
     }
   }
-  console.log(validAlbums)
+  // console.log(validAlbums)
   res.status(200).send(validAlbums)
 })
 
 app.get('/platform-album-description', async (req, res) => {
   const { user, album } = req.query
-  const userID = req.session.userID
+  console.log('req:', req.query);
+
+  const userDoc = await firestore
+    .collection('all-users')
+    .where('name', '==', user)
+    .get();
+  let userID = undefined;
+  userDoc.forEach(user => {
+    userID = user.id;
+  });
+
   const albumSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
 
   if (albumSnapshot.data() && albumSnapshot.data().description) {
@@ -296,7 +310,14 @@ app.get('/platform-album-description', async (req, res) => {
 
 app.get('/platform-album-address', async (req, res) => {
   const { user, album } = req.query
-  const userID = req.session.userID
+  const userDoc = await firestore
+    .collection('all-users')
+    .where('name', '==', user)
+    .get();
+  let userID = undefined;
+  userDoc.forEach(user => {
+    userID = user.id;
+  });
 
   const albumSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
   // console.log(albumSnapshot.data().coverPhoto.address)
@@ -310,7 +331,14 @@ app.get('/platform-album-address', async (req, res) => {
 
 app.get('/platform-album-coverphoto', async (req, res) => {
   const { user, album } = req.query
-  const userID = req.session.userID
+  const userDoc = await firestore
+    .collection('all-users')
+    .where('name', '==', user)
+    .get();
+  let userID = undefined;
+  userDoc.forEach(user => {
+    userID = user.id;
+  });
 
   const coverPhotoSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
 
@@ -324,7 +352,14 @@ app.get('/platform-album-coverphoto', async (req, res) => {
 
 app.get('/platform-album-photos', async (req, res) => {
   const { user, album } = req.query
-  const userID = req.session.userID
+  const userDoc = await firestore
+    .collection('all-users')
+    .where('name', '==', user)
+    .get();
+  let userID = undefined;
+  userDoc.forEach(user => {
+    userID = user.id;
+  });
 
   const photosSnapshot = await firestore.collection(`all-users/${userID}/albums/${album}/photos`).get()
   const photos = []

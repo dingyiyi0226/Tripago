@@ -9,6 +9,7 @@ const cloudBucket = cloudStorage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
 const firestore = new Firestore();
 
 async function photoProcessing(file, userID, album) {
+  console.log('processing called')
 
   let photoUrl = ''
   let photoLoc = {}
@@ -17,6 +18,7 @@ async function photoProcessing(file, userID, album) {
 
   const parsePhoto = async () => {
     let loc = await exifr.gps(file.buffer)
+    console.log('loc:',loc)
     if(loc) {
       photoLoc = {lat: loc.latitude, lng: loc.longitude}
       noLoc = false
@@ -30,6 +32,7 @@ async function photoProcessing(file, userID, album) {
           result_type: ['administrative_area_level_1'] // Level of City
         }
       })
+
       if (res.data.status==="OK") {
         const addressComponents = res.data.results[0].address_components  // first result is the most explicit one
         photoAddr = addressComponents.map( component => component.long_name.toLowerCase())
@@ -80,14 +83,16 @@ async function photoProcessing(file, userID, album) {
   }
 
   await parsePhoto()
+  console.log('finish parsing')
   await upload2Storage
+  console.log('finish uploading to storage')
   await upload2Database()
+  console.log('finish uploading to db')
 
   console.log(`finish processing ${file.originalname}`)
 }
 
 async function updateAlbumCoverPhoto(userID, album) {
-
   // const albumSnapshot = await firestore.doc(`users/${user}/albums/${album}`).get()
   const albumSnapshot = await firestore.doc(`all-users/${userID}/albums/${album}`).get()
   // console.log('update', albumSnapshot)
