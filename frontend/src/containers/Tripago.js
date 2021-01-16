@@ -2,6 +2,7 @@ import React, { useContext } from 'react'  //import useContext preparing for aut
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 import Header from '../components/Header.js'
+import Homepage from '../components/Homepage.js'
 import Home from '../components/Home.js'
 import Albums from '../components/Albums.js'
 import Album from '../components/Album'
@@ -44,6 +45,9 @@ const Tripago = () => {
           <Redirect to="/home" />
         </Route>
         <Route path="/home">
+          <Homepage />
+        </Route>
+        <Route path="/map">
           <Home />
         </Route>
         <Route exact path="/albums">

@@ -1,3 +1,31 @@
+/* Homepage */
+.homepage {
+  width: 50%;
+  margin: auto;
+  padding-top: 5rem;
+}
+
+.homepage .logo-text {
+  font-size: 5rem;
+  padding-bottom: 2rem;
+}
+
+.homepage .input-group-append {
+  align-items: center;
+  padding: 0 10px;
+  background-color: #EAEAEA
+}
+
+.homepage .input-group-append:hover {
+  background-color: #E0E0E0
+}
+
+.homepage .input-group-append img {
+  width: 20px;
+  height: 20px;
+}
+
+
 /* Profile */
 .profile__text h3,
 .profile__text h6 {
@@ -12,7 +40,7 @@
 .travel-map {
   margin: auto;
   padding-top: 10px;
-  height: 60%;
+  height: 70%;
   width: 90%;
   text-align: left;
 }
