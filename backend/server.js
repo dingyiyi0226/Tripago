@@ -24,6 +24,7 @@ app.use(
     secret: 'su35/3wu0 m, cjo4',
     resave: false,
     saveUninitialized: false,
+    sameSite: 'None'
   })
 );
 
