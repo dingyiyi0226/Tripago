@@ -50,7 +50,12 @@ class UserSetting extends Component {
     formdata.append('photo', userPhoto)
     formdata.append('description', userDescription)
     let res = await imageUploadInstance.post('/user-settings', formdata)
-    console.log(res)
+    // console.log(res)
+    this.setState({
+      userDescription: '',
+      userPhoto: undefined,
+      photoPreviewUrl: undefined
+    })
   }
 
   render(){
