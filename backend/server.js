@@ -261,7 +261,8 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
   res.status(200).send();
 })
 
-//platform
+// Platform
+
 app.get('/platform', async (req, res) => {  // i guess it works now
   let { region } = req.query
   if (region){
@@ -300,6 +301,8 @@ app.get('/platform', async (req, res) => {  // i guess it works now
   // console.log(validAlbums)
   res.status(200).send(validAlbums)
 })
+
+// Platform Card
 
 app.get('/platform-album-description', async (req, res) => {
   const { user, album } = req.query
@@ -344,6 +347,28 @@ app.get('/platform-album-address', async (req, res) => {
     res.status(200).send()
   }
 })
+
+app.get('/platform-album-userPhoto', async (req, res) => {
+  const { user } = req.query
+  const userDoc = await firestore
+    .collection('all-users')
+    .where('name', '==', user)
+    .get();
+  let userID = undefined;
+  userDoc.forEach(user => {
+    userID = user.id;
+  });
+
+  const userSnapshot = await firestore.doc(`all-users/${userID}`).get()
+  // console.log(albumSnapshot.data().coverPhoto.address)
+  if (userSnapshot.data() && userSnapshot.data().photo) {
+    res.status(200).send(userSnapshot.data().photo)
+  }
+  else {
+    res.status(200).send()
+  }
+})
+// Platform CardMap
 
 app.get('/platform-album-coverphoto', async (req, res) => {
   const { user, album } = req.query

@@ -4,7 +4,7 @@ import { Button, Card, Image, Media } from 'react-bootstrap'
 
 import CardMap from './PlatformCardMap.js'
 import './Platform.css'
-import testpic from './testpic.png'
+import defaultUserPhoto from './testpic.png'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 
@@ -19,8 +19,8 @@ class PlatformCard extends Component {
     this.state = {
       expand: false,
       address: [],
-      profilePic: testpic,
-      description: 'No Description'
+      userPhoto: undefined,
+      description: undefined
     }
   }
 
@@ -44,13 +44,20 @@ class PlatformCard extends Component {
         })
       }
     }
-    const getProfile = async () => {
+    const getPhoto = async () => {
       // TODO: fetch profile pic
+      const userPhoto = await instance.get('/platform-album-userPhoto', {params: {user: user}})
+      // console.log(userPhoto.data)
+      if(userPhoto.data){
+        this.setState({
+          userPhoto: userPhoto.data
+        })
+      }
     }
 
     getDescription()
     getAddress()
-    getProfile()
+    getPhoto()
   }
 
   toggleExpand = () => {
@@ -75,13 +82,13 @@ class PlatformCard extends Component {
         </Card.Header>
         <Card.Body>
           <Media>
-            <Image src={this.state.profilePic} rounded className="profilePic"/>
+            <Image src={this.state.userPhoto || defaultUserPhoto} rounded className="user-photo"/>
             <Media.Body>
               <h5>{this.props.album}</h5>
               { this.state.expand ? (
                   <CardMap user={this.props.user} album={this.props.album}/>
                 ) : (
-                  <p className="description">{this.state.description}</p>
+                  <p className="description">{this.state.description || 'No Description'}</p>
                 )
               }
             </Media.Body>
