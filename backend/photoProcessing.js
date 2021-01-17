@@ -124,7 +124,7 @@ async function updateUserSettings(userID, userDescription, userPhoto) {
   // Upload to Cloud Storage
   if (userPhoto){
     const upload2Storage = new Promise((resolve, reject) => {
-      const blob = cloudBucket.file(`${userID}/photo`);
+      const blob = cloudBucket.file(`${userID}/photo/${userPhoto.originalname}`);  // must contain file extension
       const blobStream = blob.createWriteStream({
         resumable: false,
         public: true
