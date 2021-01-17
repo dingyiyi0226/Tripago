@@ -117,4 +117,55 @@ async function updateAlbumCoverPhoto(userID, album) {
   }
 }
 
-export { photoProcessing, updateAlbumCoverPhoto }
+async function updateUserSettings(userID, userDescription, userPhoto) {
+
+  let photoUrl = ''
+
+  // Upload to Cloud Storage
+  if (userPhoto){
+    const upload2Storage = new Promise((resolve, reject) => {
+      const blob = cloudBucket.file(`${userID}/photo`);
+      const blobStream = blob.createWriteStream({
+        resumable: false,
+        public: true
+      });
+
+      blobStream.on('error', err => {
+        next(err);
+      });
+
+      blobStream.on('finish', (response) => {
+        photoUrl = `https://${cloudBucket.name}.storage.googleapis.com/${blob.name}`;
+        resolve(response)
+      });
+      blobStream.end(userPhoto.buffer);
+    })
+    await upload2Storage
+  }
+
+  // Upload to database
+  const userDoc = firestore.doc(`all-users/${userID}`)
+
+  if (userDescription && userPhoto){
+    await userDoc.set({
+      description: userDescription,
+      photo: photoUrl
+    }, {merge: true})
+  }
+  else if (userDescription){
+    console.log('only description')
+    await userDoc.set({
+      description: userDescription,
+    }, {merge: true})
+  }
+  else if (userPhoto){
+    console.log('only photo')
+    await userDoc.set({
+      photo: photoUrl,
+    }, {merge: true})
+  }
+
+  console.log('finish update user settings')
+}
+
+export { photoProcessing, updateAlbumCoverPhoto, updateUserSettings }

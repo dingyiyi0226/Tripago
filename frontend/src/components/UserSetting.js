@@ -5,6 +5,14 @@ import { Button, Image, Form } from 'react-bootstrap'
 
 import './component.css'
 
+const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
+
+const imageUploadInstance = axios.create({
+  baseURL: URL_ROOT,
+  headers: {'content-type': 'multipart/form-data'},
+  withCredentials: true
+})
+
 class UserSetting extends Component {
 
   constructor(props){
@@ -35,23 +43,14 @@ class UserSetting extends Component {
   onSubmit = async (e) => {
     console.log('onSubmit')
     e.preventDefault()
-    const { userDescription } = this.state
 
-    // try {
-    //   const res = await instance.post('/album-create', {
-    //     albumName: albumName,
-    //     albumDescription: albumDescription
-    //   })
-    //   this.setState({ submit: true })
-    // }
-    // catch {
-    //   console.log('album already exists')
-    //   this.setState({
-    //     albumName: '',
-    //     albumDescription: '',
-    //     showAlert: true
-    //   })
-    // }
+    const { userDescription, userPhoto } = this.state
+
+    const formdata = new FormData()
+    formdata.append('photo', userPhoto)
+    formdata.append('description', userDescription)
+    let res = await imageUploadInstance.post('/user-settings', formdata)
+    console.log(res)
   }
 
   render(){
@@ -76,10 +75,10 @@ class UserSetting extends Component {
             <Form.Label>Description</Form.Label>
             <Form.Control type="text" value={this.state.userDescription} placeholder="Description of the user" onChange={this.onChange}/>
           </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
         </Form>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
       </div>
     )
   }

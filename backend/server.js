@@ -5,7 +5,7 @@ import multer from 'multer'
 import { Storage } from '@google-cloud/storage'
 import { Firestore, FieldPath } from '@google-cloud/firestore'
 import { FirestoreStore } from '@google-cloud/connect-firestore'
-import { photoProcessing, updateAlbumCoverPhoto } from './photoProcessing.js'
+import { photoProcessing, updateAlbumCoverPhoto, updateUserSettings } from './photoProcessing.js'
 
 const allowed_origins = ['http://localhost:3000', 'https://dingyiyi0226.github.io']
 
@@ -130,6 +130,15 @@ app.get('/profile', async (req, res) => { //compatible with session
     res.status(404).send('USER NOT FOUND')
   }
 });
+
+// User Infos
+app.post('/user-settings', upload.single('photo'), async (req, res) => {
+  const userID = req.session.userID
+  const { description } = JSON.parse(JSON.stringify(req.body))
+  console.log('user-settings', userID, description, req.file)
+  await updateUserSettings(userID, description, req.file)
+  res.status(200).send()
+})
 
 app.get('/albums', async (req, res) => { //compatible with session
   const userID = req.session.userID
