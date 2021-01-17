@@ -23,16 +23,22 @@ const Tripago = () => {
       <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Header />
         <Switch>
-        <Route path="/register">
-          <Registration />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <Redirect to="/login" />
-        </Route>
-      </Switch>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route exact path="/home">
+            <Homepage />
+          </Route>
+          <Route path="/platform">
+            <Platform />
+          </Route>
+          <Route path="/register">
+            <Registration />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+        </Switch>
       </BrowserRouter>
       );
   }
