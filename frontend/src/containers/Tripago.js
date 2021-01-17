@@ -26,7 +26,7 @@ const Tripago = () => {
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
-          <Route exact path="/home">
+          <Route path="/home">
             <Homepage />
           </Route>
           <Route path="/platform">
