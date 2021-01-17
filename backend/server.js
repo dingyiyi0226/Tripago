@@ -15,6 +15,7 @@ app.use(cors({
   origin: allowed_origins
 }));
 app.use(express.json());
+app.set('trust proxy', true);
 app.use(
   session({
     store: new FirestoreStore({
@@ -27,7 +28,7 @@ app.use(
     cookie: {
       sameSite: 'None',
       secure: true
-    }    
+    }
   })
 );
 
@@ -111,6 +112,7 @@ const REGISTRATION_FAIL = () => {
 
 app.get('/profile', async (req, res) => { //compatible with session
   const userID = req.session.userID;
+  console.log('profile', req.session)
   const userPhoto = './testpic.png'; //tmp
   if (userID) {
     const userDoc = await firestore
@@ -131,6 +133,7 @@ app.get('/profile', async (req, res) => { //compatible with session
 
 app.get('/albums', async (req, res) => { //compatible with session
   const userID = req.session.userID
+  console.log('albums', req.session)
   // const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
   const albumsSnapshot = await firestore.collection(`all-users/${userID}/albums`).get()
   const albums = []
@@ -245,7 +248,7 @@ app.post('/upload-photos', upload.array('photos', MAX_FILE), async (req, res, ne
     // Should the server response to client immediatly or await photo upload to db or not ?
     await photoProcessing(file, userID, album)
       .catch('fuck here')
-  }  
+  }
   await updateAlbumCoverPhoto(userID, album)
   res.status(200).send();
 })
@@ -431,16 +434,20 @@ app.post('/login', async (req, res) => {
     name = doc.data().name;
   })
   if (userID) { // login successfully
+    console.log('login successfully', userID)
     req.session.userID = userID;
+    console.log('login successfully session:', req.session)
     res.status(200).send(LOGGED_IN(name));
   } else { // user not found
+    console.log('login user not found')
     res.status(200).send(NOT_LOGGED_IN());
   }
 });
 
 app.post('/logout', async (req, res) => {
+  console.log('logout session', req.session)
   req.session.destroy( err => {
-    console.log(err);
+    console.log('logout err', err);
   });
   res.status(200).send('logged out');
 });
@@ -457,6 +464,7 @@ app.get('/session', async (req, res) => {
   const data = validated.data(); // undefined or {..., data: '{"cookie":{...},"userID":"???"}'}
   if (data) {
     const userID = String(JSON.parse(data.data).userID);
+    console.log('userID', userID)
     const userDoc = await firestore
       .collection(ALL_USERS_COLLECTION)
       .doc(userID)
@@ -467,6 +475,7 @@ app.get('/session', async (req, res) => {
     req.session.userID = userID;
     res.status(200).send(SESSION_LOGGED_IN(userName));
   } else {
+    console.log('not logged in')
     res.status(200).send(SESSION_NOT_LOGGED_IN());
   }
 });
