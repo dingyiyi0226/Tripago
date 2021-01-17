@@ -30,10 +30,9 @@ class PlatformSidebar extends Component {
     const { region } = this.state
     return (
       <div className="platform-sidebar position-sticky">
-        <p className="pt-3 pb-2 mb-3 border-bottom">Filter</p>
         <Form>
           <Form.Group controlId="region">
-            <Form.Label>Region Search</Form.Label>
+            <Form.Label className="search-label">Region Search</Form.Label>
             <InputGroup size="sm">
               <Form.Control type="text" value={region} placeholder="Region" onChange={this.onInputRegion}/>
               <InputGroup.Append as={NavLink} to={{pathname: '/platform', search: `?region=${region}`}} onClick={this.onSearch}>
