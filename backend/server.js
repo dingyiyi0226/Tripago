@@ -113,18 +113,17 @@ const REGISTRATION_FAIL = () => {
 app.get('/profile', async (req, res) => { //compatible with session
   const userID = req.session.userID;
   console.log('profile', req.session)
-  const userPhoto = './testpic.png'; //tmp
   if (userID) {
     const userDoc = await firestore
       .collection(ALL_USERS_COLLECTION)
       .doc(userID)
       .get();
-    const userName = userDoc.data().name;
-    const userDescription = userDoc.data().description;
+    const {name, description, photo} = userDoc.data()
+
     res.status(200).send({
-      userName: userName,
-      userDescription: userDescription,
-      userPhoto: userPhoto
+      userName: name,
+      userDescription: description,
+      userPhoto: photo
     });
   } else {
     res.status(404).send('USER NOT FOUND')
