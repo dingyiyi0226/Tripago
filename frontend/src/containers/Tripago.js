@@ -12,6 +12,7 @@ import Registration from '../components/auth/Registration'
 // import {checkLoginStatus} from '../components/auth/authenticate'
 import LoginContext from '../LoginContext.js'
 import Platform from '../components/Platform'
+import UserSetting from '../components/UserSetting.js'
 
 const Tripago = () => {
   const { loginStatus } = useContext(LoginContext);
@@ -73,6 +74,9 @@ const Tripago = () => {
         </Route>
         <Route path="/platform">
           <Platform />
+        </Route>
+        <Route path="/settings">
+          <UserSetting />
         </Route>
       </Switch>
     </BrowserRouter>

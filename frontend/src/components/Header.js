@@ -49,6 +49,9 @@ const Header = () => {
         </Nav>
 
         <Nav className="justify-content-end">
+          <Nav.Item>
+            <Nav.Link as={NavLink} to="/settings">Settings</Nav.Link>
+          </Nav.Item>
           <Nav.Item
             onClick={() => {
               console.log('logout clicked')

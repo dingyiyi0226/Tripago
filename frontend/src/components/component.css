@@ -109,6 +109,20 @@
   padding: 1rem;
 }
 
+/* User Setting */
+.user-setting {
+  width: 40%;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+.user-setting .photo-preview {
+  display: block;
+  height: 100px;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
 /* Fetching Text */
 .fetching-text {
   margin-top: 2rem;
