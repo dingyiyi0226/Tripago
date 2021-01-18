@@ -70,4 +70,6 @@ The website is deployed online [here](https://dingyiyi0226.github.io/tripago).
 
 For Safari users, the website may not function normally due to cookie policies. Please go to Preference (⌘,) -> Privacy, and uncheck "prevent cross-site tracking" to allow cookies to work normally. Cookies are only used to record users' login status.
 
-
+## 分工
+- B06901023 陳奐廷：前端功能（相簿、地圖等）及對應後端、相片processing與儲存
+- B06202054 蔡沛愷：使用者功能（Session、註冊登入、資料庫）、presentation影片及README
