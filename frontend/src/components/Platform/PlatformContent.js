@@ -18,14 +18,16 @@ function useQuery() {
 
 function PlatformContent(props) {
   const [ albums, setAlbums ] = useState([])
+  const [ fetching, setFetching ] = useState(true)
   
   let region = useQuery()
   useEffect(() => {
+    setFetching(true)
     console.log('useeffect', region)
-    // TODO: Fetch data from backend
     const getAlbums = async () => {
       const res = await instance.get('/platform', { params: {region: region}})
       // console.log(res.data)
+      setFetching(false)
       setAlbums(res.data)
     }
     getAlbums()
@@ -37,10 +39,14 @@ function PlatformContent(props) {
         Region - { region || 'All Region' }
       </p>
       <div className="platform">
-        { albums.length ? (
-            albums.map( album => (<PlatformCard user={album.user} album={album.albumName} key={`${album.user}-${album.albumName}`}/>) )
+        { fetching ? (
+            <h3 className="error-text">Fetching...</h3>
           ) : (
-            <h3 className="no-result"> No Result</h3>
+            albums.length ? (
+              albums.map( album => (<PlatformCard user={album.user} album={album.albumName} key={`${album.user}-${album.albumName}`}/>) )
+            ) : (
+              <h3 className="error-text">No Result</h3>
+            )
           )
         }
 
