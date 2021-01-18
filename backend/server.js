@@ -427,27 +427,25 @@ app.post('/register', async (req, res) => {
     console.log('existed userID: ', userID);
     res.status(200).send(REGISTRATION_FAIL());
   } else {
-    const userInfoDoc = await firestore
-      .collection(ALL_USERS_COLLECTION)
-      .doc('info');
-    const userInfo = await userInfoDoc.get();
-    const lastestID = userInfo.data().lastestID;
-    userID = String(1 + Number(lastestID));
-    const usersRef = firestore
-      .collection(ALL_USERS_COLLECTION)
-      .doc(userID);
-    const DBres = await usersRef.set({
-      email: email,
-      name: name,
-      password: password,
-      description: ""
-    }).then(() => {
-      userInfoDoc.set({lastestID: userID});
+    try {
+      const userRef = await firestore
+        .collection(ALL_USERS_COLLECTION)
+        .doc();  // automatically generate unique ID
+
+      const DBres = await userRef.set({
+        email: email,
+        name: name,
+        password: password,
+      })
+
+      const userID = userRef.id
       req.session.userID = userID;
       res.status(200).send(LOGGED_IN(name));
-    }).catch((err) => {
-      console.log(err);
-    })
+    }
+    catch (err) {
+      console.log('register err', err)
+      res.status(404).send()
+    }
   }
 });
 
