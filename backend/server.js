@@ -39,18 +39,6 @@ const firestore = new Firestore();
 
 const ALL_USERS_COLLECTION = 'all-users';
 
-//Some tmp data
-const USER = 'ethia_polis';
-// const USER = 'PKdropthebeat';
-const userID = '12345';
-let users = [
-  {userID: '1', userName: 'Alice', email: 'alice@gmail.com', password: 'qwerty'},
-  {userID: '2', userName: 'Bob', email: 'bob@gmail.com', password: 'qwerty'},
-  {userID: '3', userName: 'Nebuchadnezzar', email: 'nebuchadnezzar@gmail.com', password: 'qwerty'},
-  {userID: '4', userName: '', email: '', password: ''}
-];
-
-
 const upload = multer({storage: storage});
 const MAX_FILE = 12;
 
@@ -142,7 +130,6 @@ app.post('/user-settings', upload.single('photo'), async (req, res) => {
 app.get('/albums', async (req, res) => { //compatible with session
   const userID = req.session.userID
   console.log('albums', req.session)
-  // const albumsSnapshot = await firestore.collection(`users/${USER}/albums`).get()
   const albumsSnapshot = await firestore.collection(`all-users/${userID}/albums`).get()
   const albums = []
   albumsSnapshot.forEach( album => {
@@ -171,7 +158,6 @@ app.delete('/album', async (req, res) => { //compatible with session
 app.post('/album-create', async (req, res) => { //compatible with session
   const { albumName, albumDescription } = req.body
   const userID = req.session.userID
-  // const albumRef = await firestore.doc(`users/${USER}/albums/${albumName}`)
   const albumRef = await firestore.doc(`all-users/${userID}/albums/${albumName}`)
   try {
     await albumRef.create({description: albumDescription})
