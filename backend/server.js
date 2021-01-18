@@ -142,14 +142,19 @@ app.delete('/album', async (req, res) => { //compatible with session
   const { album } = req.query
   const userID = req.session.userID
 
-  const photoDoc = await firestore.doc(`all-users/${userID}/albums/${album}`);
+  const albumDoc = await firestore.doc(`all-users/${userID}/albums/${album}`);
+  const photosSnapshot = await firestore.collection(`all-users/${userID}/albums/${album}/photos`).get()
 
   await cloudBucket.deleteFiles({
     force: true,
     prefix: `${userID}/${album}/`
   })
 
-  await photoDoc.delete()
+  for (let photo of photosSnapshot.docs){
+    await photo.ref.delete()
+  }
+
+  await albumDoc.delete()
   console.log('finish delete', album)
 
   res.status(200).send()
