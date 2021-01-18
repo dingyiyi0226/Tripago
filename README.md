@@ -53,11 +53,11 @@ Install dependency and start web service
 > yarn start
 ```
 
-To connect to server, ```.env.production```(local website) or ```.env.development```(deployed website) are needed at ```Tripago/frontend```:
+To connect to server, ```.env.development```(local website) or ```.env.production```(deployed website) are needed at ```Tripago/frontend```:
 
 ``` bash
 ### Tripago/backend/.env.production or Tripago/backend/.env.development
-## Un-comment one of the following configurations for local/cloud server.
+## Un-comment one of the following configurations for cloud/local server.
 
 ## Cloud server
 # REACT_APP_BACKEND_URL=[SERVER_PATH] 
