@@ -39,7 +39,7 @@ GOOGLE_CLOUD_PROJECT=[PROJECT_NAME]
 ## Name of the storage bucket on Google Cloud Platform
 GCLOUD_STORAGE_BUCKET=[STORAGE_BUCKET_NAME]
 
-## Google API key (for Google Maps)
+## Google API key (for Google Geocoding Api)
 GOOGLE_API_KEY=[API_KEY]
 ```
 
