@@ -5,7 +5,7 @@ import { Card, Container, Row, Col } from 'react-bootstrap'
 
 import './component.css'
 import albumCreationCover from './add-outline.svg'
-import albumDefaultCover from './testpic2.png'
+import albumDefaultCover from './albumDefaultCover.png'
 import crossImg from './close-circle-outline.svg'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'

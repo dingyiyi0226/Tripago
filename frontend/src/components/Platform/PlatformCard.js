@@ -4,7 +4,7 @@ import { Button, Card, Image, Media } from 'react-bootstrap'
 
 import CardMap from './PlatformCardMap.js'
 import './Platform.css'
-import defaultUserPhoto from './testpic.png'
+import defaultUserPhoto from './defaultUserPhoto.png'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 

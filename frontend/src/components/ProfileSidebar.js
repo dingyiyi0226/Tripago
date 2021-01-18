@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap'
 import axios from 'axios'
 
 import './component.css'
-import defaultUserPhoto from './testpic.png'
+import defaultUserPhoto from './defaultUserPhoto.png'
 
 const URL_ROOT = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000'
 const instance = axios.create({
