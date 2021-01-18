@@ -59,7 +59,7 @@ async function photoProcessing(file, userID, album) {
     });
 
     blobStream.on('finish', (response) => {
-      photoUrl = `https://${cloudBucket.name}.storage.googleapis.com/${blob.name}`;
+      photoUrl = encodeURI(`https://${cloudBucket.name}.storage.googleapis.com/${blob.name}`);
       resolve(response)
     });
     blobStream.end(file.buffer);
@@ -135,7 +135,7 @@ async function updateUserSettings(userID, userDescription, userPhoto) {
       });
 
       blobStream.on('finish', (response) => {
-        photoUrl = `https://${cloudBucket.name}.storage.googleapis.com/${blob.name}`;
+        photoUrl = encodeURI(`https://${cloudBucket.name}.storage.googleapis.com/${blob.name}`);
         resolve(response)
       });
       blobStream.end(userPhoto.buffer);
